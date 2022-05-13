@@ -1,0 +1,16 @@
+/*
+  Login
+*/
+.login {
+  width: 48rem;
+  margin: 0 auto;
+
+  &__link {
+    margin-top: 1.6rem;
+    text-align: center;
+    a {
+      font-size: 1.4rem;
+      text-decoration: underline;
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+    "require": {
+        "vlucas/phpdotenv": "^5.4",
+        "cebe/markdown": "^1.2"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.6"
+    }
+}

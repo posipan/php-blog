@@ -1,0 +1,53 @@
+/*
+  Variable
+*/
+@use "sass:math";
+
+// Color
+$white: #FFFFFF;
+$accent-color: #F99292;
+$primary-color: #FFBC61;
+$secondary-color: #FFC679;
+$bg-color: #FFF4E0;
+
+// BreakPoint
+$bp: 64rem;
+
+// Content Width
+$base_w: 75rem;
+
+
+/*
+  Mixin
+*/
+// Bg image
+@mixin bg($img) {
+  background: url($img) center center no-repeat;
+  background-size: contain;
+}
+
+// Font size & Line height
+@function rem($size) {
+  @return math.div($size, 10) + rem;
+}
+
+@mixin font($size, $lh) {
+  font-size: rem($size);
+  line-height: math.div($lh, $size);
+}
+
+// PX 2 VW
+$base_pc_w: 1080;
+@function vw_pc($pixelsVw) {
+  @return math.div($pixelsVw, $base_pc_w) * 100vw;
+}
+$base_sp_w: 375;
+@function vw_sp($pixelsVw) {
+  @return math.div($pixelsVw, $base_sp_w) * 100vw;
+}
+
+// Fluid
+@function fluid($height, $width) {
+  $result: math.div($height, $width) * 100%;
+  @return $result;
+}

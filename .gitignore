@@ -1,0 +1,11 @@
+node_modules
+.DS_Store
+.env*
+.vscode
+
+mysql
+data
+db_data
+logs
+vendor
+storage
