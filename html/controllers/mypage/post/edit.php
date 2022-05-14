@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace controller\mypage\post\edit;
 
 use db\PostQuery;
-use db\CategoryQuery;
 use db\CategoryRelationshipQuery;
 use db\DB;
 use lib\Auth;
@@ -34,7 +33,7 @@ function get(): void
   $post = PostModel::getSessionAndFlush();
 
   if (!empty($post)) {
-    \view\mypage\post\edit\index($post, $post->selected_category_id);
+    \view\mypage\post\edit\index($post);
     return;
   }
 
@@ -127,12 +126,17 @@ function post(): mixed
       if ($is_success) {
           // カテゴリーリレーションの登録処理
           $is_success = CategoryRelationshipQuery::insert($update_post, $category_relationship);
+      } else {
+        $is_success = false;
       }
 
       if ($is_success) {
         // 記事の更新処理
         $is_success = PostQuery::update($update_post);
+      } else {
+        $is_success = false;
       }
+
     } catch (Throwable $e) {
       Msg::push(Msg::DEBUG, $e->getMessage());
 
@@ -150,7 +154,7 @@ function post(): mixed
         Msg::push(Msg::ERROR, '記事の更新に失敗しました。');
 
         // 入力内容をセッションに保存
-        PostModel::setSession($post);
+        PostModel::setSession($update_post);
 
         redirect(GO_REFERER);
       }

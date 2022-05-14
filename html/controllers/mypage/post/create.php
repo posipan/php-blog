@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace controller\mypage\post\create;
 
 use db\PostQuery;
-use db\CategoryQuery;
 use db\CategoryRelationshipQuery;
 use db\DB;
 use lib\Auth;
