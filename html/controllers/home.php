@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ホームページのコントローラー
+ * ホームページのコントローラーファイル
  *
  * @author Posipan
  */
@@ -20,11 +20,20 @@ use db\PostQuery;
  */
 function get(): void
 {
+  /** @var int */
+  $total = PostQuery::countAllPublishedPosts();
+
+  /** @var float */
+  $pages = ceil($total / MAX_VIEW);
+
+  /** @var int */
+  $start = (int) get_param('page', 1, false);
+
   /** @var array|object|false */
-  $posts = PostQuery::fetchAllPublishedPosts();
+  $posts = PostQuery::fetchAllPublishedPosts($start, MAX_VIEW);
 
   /** @var array|false */
   $all_categories = CategoryQuery::fetchAllCategories();
 
-  \view\home\index($posts, $all_categories);
+  \view\home\index($posts, $all_categories, $start, $pages);
 }
