@@ -40,7 +40,7 @@ class PostQuery
     $db = new DB();
 
     /** @var string */
-    $sql = "SELECT p.*, u.name AS author_name, GROUP_CONCAT(DISTINCT c.id ORDER BY c.id ASC) AS selected_categories
+    $sql = "SELECT p.*, u.name AS author_name, c.id AS selected_category_id
       FROM `posts` p
       INNER JOIN `users` u
         ON p.user_id = u.id
@@ -49,7 +49,6 @@ class PostQuery
       INNER JOIN `categories` c
         ON cr.category_id = c.id
       WHERE p.id = :id
-      GROUP BY p.id
       ORDER BY p.id DESC;
     ";
 
@@ -63,10 +62,12 @@ class PostQuery
    *
    * マイポストを表示
    *
+   * @param int $start 開始位置
+   * @param int $max 最大取得数
    * @param object $user ユーザー情報
    * @return array|object|false
    */
-  public static function fetchMyAllPosts(object $user): array|object|false
+  public static function fetchMyAllPosts(int $start, int $max, object $user): array|object|false
   {
     // バリデーション
     if (!$user->isValidEmail()) {
@@ -77,30 +78,40 @@ class PostQuery
     $db = new DB();
 
     /** @var string */
-    $sql = "SELECT p.*, GROUP_CONCAT(DISTINCT c.id ORDER BY c.id ASC) AS selected_categories
+    $sql = "SELECT p.*, c.id AS selected_category_id
       FROM `posts` p
       INNER JOIN `category_relationships` cr
         ON p.id = cr.post_id
       INNER JOIN `categories` c
         ON cr.category_id = c.id
       WHERE p.user_id = :user_id
-      GROUP BY p.id
-      ORDER BY p.update_at DESC;
+      ORDER BY p.update_at DESC
+      LIMIT :start, :max;
     ";
 
-    return $db->select($sql, [
-      ':user_id' => $user->id,
-    ], DB::CLS, PostModel::class);
+    if ($start === 1) {
+      return $db->select($sql, [
+        ':user_id' => $user->id,
+        ':start' => $start - 1,
+        ':max' => $max,
+      ], DB::CLS, PostModel::class);
+    } else {
+      return $db->select($sql, [
+        ':user_id' => $user->id,
+        ':start' => ($start - 1) * MAX_VIEW,
+        ':max' => $max,
+      ], DB::CLS, PostModel::class);
+    }
   }
 
   /**
    * 記事数の取得を定義
    *
    * @param string $page ページ名
-   * @param string $param パラメータ
+   * @param string|int $param パラメータ
    * @return int
    */
-  public static function countAllPublishedPosts(string $page = '', string $param = ''): int
+  public static function countAllPublishedPosts(string $page = '', string|int|null $param = ''): int
   {
     /** @var \db\DB */
     $db = new DB();
@@ -130,12 +141,24 @@ class PostQuery
         INNER JOIN `categories` c
           ON cr.category_id = c.id
         WHERE p.status = :status
-          AND c.slug = :category_slug;
+          AND c.name = :category_name;
       ";
 
       return $db->selectOne($sql, [
         ':status' => PostModel::$PUBLISH,
-        ':category_slug' => $param,
+        ':category_name' => $param,
+      ], DB::CLS, PostModel::class)->count;
+    } else if ($page === 'mypage') {
+      /** @var string */
+      $sql = "SELECT COUNT(*) AS count
+        FROM `posts` p
+        INNER JOIN `users` u
+        ON p.user_id = u.id
+        WHERE p.user_id = :id
+      ";
+
+      return $db->selectOne($sql, [
+        ':id' => $param,
       ], DB::CLS, PostModel::class)->count;
     } else {
       /** @var string */
@@ -160,7 +183,7 @@ class PostQuery
     $db = new DB();
 
     /** @var string */
-    $sql = "SELECT p.*, u.name AS author_name, GROUP_CONCAT(DISTINCT c.id ORDER BY c.id ASC) AS selected_categories
+    $sql = "SELECT p.*, u.name AS author_name, c.id AS selected_category_id
       FROM `posts` p
       INNER JOIN `users` u
         ON p.user_id = u.id
@@ -169,7 +192,6 @@ class PostQuery
       INNER JOIN `categories` c
         ON cr.category_id = c.id
       WHERE p.status = :status
-      GROUP BY p.id
       ORDER BY p.update_at DESC
       LIMIT :start, :max;
     ";
@@ -192,18 +214,18 @@ class PostQuery
   /**
    * カテゴリーの公開記事の取得を定義
    *
-   * @param string $category_slug カテゴリースラッグ名
    * @param int $start 開始位置
    * @param int $max 最大取得数
+   * @param string $category_name カテゴリー名
    * @return array|object|false
    */
-  public static function fetchCategoryAllPublishedPosts(string $category_slug, int $start, int $max): array|object|false
+  public static function fetchCategoryAllPublishedPosts(int $start, int $max, string $category_name): array|object|false
   {
     /** @var \db\DB */
     $db = new DB();
 
     /** @var string */
-    $sql = "SELECT p.*, u.name AS author_name, GROUP_CONCAT(DISTINCT c.id ORDER BY c.id ASC) AS selected_categories
+    $sql = "SELECT p.*, u.name AS author_name, c.id AS selected_category_id
       FROM `posts` p
       INNER JOIN `users` u
         ON p.user_id = u.id
@@ -212,8 +234,7 @@ class PostQuery
       INNER JOIN `categories` c
         ON cr.category_id = c.id
       WHERE p.status = :status
-        AND c.slug = :category_slug
-      GROUP BY p.id
+        AND c.name = :category_name
       ORDER BY p.update_at DESC
       LIMIT :start, :max;
     ";
@@ -221,14 +242,14 @@ class PostQuery
     if ($start === 1) {
       return $db->select($sql, [
         ':status' => PostModel::$PUBLISH,
-        ':category_slug' => $category_slug,
+        ':category_name' => $category_name,
         ':start' => $start - 1,
         ':max' => $max,
       ], DB::CLS, PostModel::class);
     } else {
       return $db->select($sql, [
         ':status' => PostModel::$PUBLISH,
-        ':category_slug' => $category_slug,
+        ':category_name' => $category_name,
         ':start' => ($start - 1) * MAX_VIEW,
         ':max' => $max,
       ], DB::CLS, PostModel::class);
@@ -238,18 +259,18 @@ class PostQuery
   /**
    * 作成者の公開記事の取得を定義
    *
-   * @param string $author_name 作成者名
    * @param int $start 開始位置
    * @param int $max 最大取得数
+   * @param string $author_name 作成者名
    * @return array|object|false
    */
-  public static function fetchAuthorAllPublishedPosts(string $author_name, int $start, int $max): array|object|false
+  public static function fetchAuthorAllPublishedPosts(int $start, int $max, string $author_name): array|object|false
   {
     /** @var \db\DB */
     $db = new DB();
 
     /** @var string */
-    $sql = "SELECT p.*, u.name AS author_name, GROUP_CONCAT(DISTINCT c.id ORDER BY c.id ASC) AS selected_categories
+    $sql = "SELECT p.*, u.name AS author_name, c.id AS selected_category_id
       FROM `posts` p
       INNER JOIN `users` u
         ON p.user_id = u.id
@@ -259,7 +280,6 @@ class PostQuery
         ON cr.category_id = c.id
       WHERE p.status = :status
         AND u.name = :author_name
-      GROUP BY p.id
       ORDER BY p.update_at DESC
       LIMIT :start, :max;
     ";

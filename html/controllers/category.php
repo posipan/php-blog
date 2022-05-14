@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace controller\category;
 
-use db\CategoryQuery;
 use db\PostQuery;
 
 /**
@@ -21,14 +20,14 @@ use db\PostQuery;
 function get(): void
 {
   /** @var string */
-  $category_slug = get_param('slug', null, false);
+  $category_name = get_param('name', null, false);
 
-  if (empty($category_slug)) {
+  if (empty($category_name)) {
     redirect(GO_HOME);
   }
 
   /** @var int */
-  $total = PostQuery::countAllPublishedPosts('category', $category_slug);
+  $total = PostQuery::countAllPublishedPosts('category', $category_name);
 
   /** @var float */
   $pages = ceil($total / MAX_VIEW);
@@ -37,10 +36,7 @@ function get(): void
   $start = (int) get_param('page', 1, false);
 
   /** @var array|false */
-  $posts = PostQuery::fetchCategoryAllPublishedPosts($category_slug, $start, MAX_VIEW);
+  $posts = PostQuery::fetchCategoryAllPublishedPosts($start, MAX_VIEW, $category_name);
 
-  /** @var array|false */
-  $all_categories = CategoryQuery::fetchAllCategories();
-
-  \view\category\index($posts, $all_categories, $category_slug, $start, $pages);
+  \view\category\index($posts, $start, $pages, $category_name);
 }

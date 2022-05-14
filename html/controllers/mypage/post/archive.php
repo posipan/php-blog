@@ -13,7 +13,6 @@ namespace controller\mypage\post\archive;
 use db\CategoryQuery;
 use db\PostQuery;
 use lib\Auth;
-use lib\Msg;
 use model\UserModel;
 
 /**
@@ -28,20 +27,20 @@ function get(): void
   /** @var object */
   $user = UserModel::getSession();
 
+  /** @var int */
+  $total = PostQuery::countAllPublishedPosts('mypage', $user->id);
+
+  /** @var float */
+  $pages = ceil($total / MAX_VIEW);
+
+  /** @var int */
+  $start = (int) get_param('page', 1, false);
+
   /** @var array|object|false */
-  $posts = PostQuery::fetchMyAllPosts($user);
-
-  // if ($posts === false) {
-  //   Msg::push(Msg::ERROR, 'ログインしてください。');
-
-  //   redirect('login');
-  // }
-
-  /** @var array|false */
-  $all_categories = CategoryQuery::fetchAllCategories();
+  $posts = PostQuery::fetchMyAllPosts($start, MAX_VIEW, $user);
 
   if (count($posts) > 0) {
-    \view\mypage\post\archive\index($posts, $all_categories);
+    \view\mypage\post\archive\index($posts, $start, $pages);
   } else {
     \view\mypage\post\archive\nopost();
   }

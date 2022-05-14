@@ -22,7 +22,6 @@ function get(): void
 {
   /** @var string */
   $author_name = get_param('name', null, false);
-  // var_dump($author_name);
 
   if (empty($author_name)) {
     redirect(GO_HOME);
@@ -38,10 +37,7 @@ function get(): void
   $start = (int) get_param('page', 1, false);
 
   /** @var array|false */
-  $posts = PostQuery::fetchAuthorAllPublishedPosts($author_name, $start, MAX_VIEW);
+  $posts = PostQuery::fetchAuthorAllPublishedPosts($start, MAX_VIEW, $author_name);
 
-  /** @var array|false */
-  $all_categories = CategoryQuery::fetchAllCategories();
-
-  \view\author\index($posts, $all_categories, $author_name, $start, $pages);
+  \view\author\index($posts, $start, $pages, $author_name);
 }

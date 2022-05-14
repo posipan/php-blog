@@ -10,28 +10,31 @@ declare(strict_types=1);
 
 namespace view\home;
 
+use db\CategoryQuery;
+
 /**
  * ホームページを出力
  *
  * @param array|object|false $posts 公開記事情報
- * @param array $all_categories 全てのカテゴリー
- * @param (string|\Closure)[] $url 各種URL
+ * @param int $start 開始位置
+ * @param int $max 最大取得数
  * @return void
  */
-function index(array|object|false $posts, array $all_categories, int $start, float $pages): void
+function index(array|object|false $posts, int $start, float $pages): void
 {
 ?>
 
   <div class="archive">
     <?php
+    /** @var array */
+    $all_categories = CategoryQuery::fetchAllCategories();
+
     /** @var object $post */
     foreach ($posts as $post) {
       $urls = [
         'post' => get_url('/post?id=' . $post->id),
-        'author' => get_url('author?name=' . $post->author_name . '&page=1'),
-        'category' => function (string $slug): string {
-          return get_url('category?slug=' . $slug . '&page=1');
-        },
+        'author' => get_url('author?name=' . $post->author_name),
+        'category' => get_url('category?name=' . $all_categories[$post->selected_category_id - 1]->name),
       ];
 
       \layout\post_item($post, $all_categories, $urls);

@@ -11,18 +11,17 @@ declare(strict_types=1);
 
 namespace layout;
 
+use db\CategoryQuery;
+
 /**
  * 記事アイテムを出力
  *
  * @param object $post 記事情報
  * @param array $all_categories 全てのカテゴリー
- * @param (string|\Closure)[] $urls 各種URL
  * @return void
  */
 function post_item(object $post, array $all_categories, array $urls): void
 {
-  /** @var array */
-  $post->selected_categories = str_to_array($post->selected_categories);
 ?>
 
   <article class="post-item box">
@@ -39,16 +38,13 @@ function post_item(object $post, array $all_categories, array $urls): void
     <div class="post-item__desc">
       <p class="post-item__category">
         <?php
-        /** @var int $category_id */
-        foreach ($post->selected_categories as $category_id) :
           /** @var string */
-          $slug = $all_categories[$category_id - 1]->slug;
+          $slug = $all_categories[$post->selected_category_id - 1]->slug;
 
           /** @var string */
-          $name = $all_categories[$category_id - 1]->name;
+          $name = $all_categories[$post->selected_category_id - 1]->name;
         ?>
-          <a href="<?php echo $urls['category']($slug); ?>" class="tag tag--<?php echo $slug; ?>"><?php echo escape($name); ?></a>
-        <?php endforeach; ?>
+          <a href="<?php echo $urls['category'] . '&page=1'; ?>" class="tag tag--<?php echo $slug; ?>"><?php echo escape($name); ?></a>
       </p>
 
       <h2 class="post-item__title"><a href="<?php echo $urls['post']; ?>"><?php echo escape($post->title); ?></a></h2>
@@ -57,7 +53,7 @@ function post_item(object $post, array $all_categories, array $urls): void
         <p class="time"><?php echo format_date($post->update_at) ?></p>
         <p class="author">
           <span class="icon"><i class="fa-solid fa-user"></i></span>
-          <a href="<?php echo $urls['author']; ?>"><?php echo escape($post->author_name); ?></a>
+          <a href="<?php echo $urls['author'] . '&page=1'; ?>"><?php echo escape($post->author_name); ?></a>
         </p>
       </div>
     </div>

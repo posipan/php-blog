@@ -28,19 +28,13 @@ function get(): void
   /** @var int */
   $post->id = (int) get_param('id', null, false);
 
-  /** @var array|false */
-  $all_categories = CategoryQuery::fetchAllCategories();
-
   /** @var object|false */
   $fetchedPost = PostQuery::fetchPost($post);
-
-  /** @var array */
-  $post->selected_categories = str_to_array($fetchedPost->selected_categories);
 
   if (!$fetchedPost) {
     Msg::push(Msg::DEBUG, '記事が見つかりません。');
     redirect('404');
   }
 
-  \view\post\index($fetchedPost, $all_categories);
+  \view\post\index($fetchedPost);
 }
