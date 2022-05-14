@@ -18,10 +18,8 @@ class CategoryRelationshipQuery
    *
    * @return bool
    */
-  public static function insert(int $post_id, int $category_id): bool
+  public static function insert(object $post, object $category_relationship): bool
   {
-    // TODO: ログインユーザーのバリデートチェック
-
     /** @var \db\DB */
     $db = new DB();
 
@@ -29,8 +27,8 @@ class CategoryRelationshipQuery
     $sql = 'INSERT INTO `category_relationships` (post_id, category_id) VALUES (:post_id, :category_id);';
 
     return $db->execute($sql, [
-      ':post_id' => $post_id,
-      ':category_id' => $category_id,
+      ':post_id' => $category_relationship->post_id,
+      ':category_id' => $post->selected_category_id,
     ]);
   }
 

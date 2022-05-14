@@ -120,18 +120,18 @@ class PostModel extends AbstractModel
    *
    * @return bool
    */
-  public function isValidCategories(): bool
+  public function isValidCategory(): bool
   {
-    return static::validateCategories($this->selected_categories);
+    return static::validateCategory($this->selected_category_id);
   }
 
   /**
    * カテゴリーのバリデーション（static）
    *
-   * @param array|null $val カテゴリー
+   * @param int $val カテゴリーID
    * @return bool $result
    */
-  public static function validateCategories(array|null $val): bool
+  public static function validateCategory(int $val): bool
   {
     $result = true;
 

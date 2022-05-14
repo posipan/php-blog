@@ -50,14 +50,11 @@ function get(): void
     /** @var int */
     $post->status = PostModel::$PUBLISH;
 
-    /** @var string */
-    $post->selected_categories = '';
+    /** @var int */
+    $post->selected_category_id = 1;
   }
 
-  /** @var array|false */
-  $all_categories = CategoryQuery::fetchAllCategories();
-
-  \view\mypage\post\create\index($post, $all_categories, $post->selected_categories);
+  \view\mypage\post\create\index($post);
 }
 
 /**
@@ -84,16 +81,11 @@ function post(): mixed
   /** @var int */
   $post->status = (int) get_param('status', null);
 
-  /** @var string|array|null */
-  $post->selected_categories = get_param('categories', null);
+  /** @var int */
+  $post->selected_category_id = (int) get_param('category', null);
 
   /** @var \model\CategoryRelationshipModel */
   $category_relationship = new CategoryRelationshipModel();
-
-  if (!empty($post->selected_categories)) {
-    /** @var int[] */
-    $post->selected_categories = array_map('intval', $post->selected_categories);
-  }
 
   /** @var object */
   $user = UserModel::getSession();
@@ -121,12 +113,8 @@ function post(): mixed
 
     if ($is_success) {
       // カテゴリーリレーションの登録処理
-      foreach ($post->selected_categories as $category_id) {
-        /** @var int category_id */
-        CategoryRelationshipQuery::insert($category_relationship->post_id, $category_id);
-      }
-    } else {
-      $is_success = false;
+      /** @var int category_id */
+      $is_success = CategoryRelationshipQuery::insert($post, $category_relationship);
     }
   } catch (Throwable $e) {
     Msg::push(Msg::DEBUG, $e->getMessage());

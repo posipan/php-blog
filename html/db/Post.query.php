@@ -345,14 +345,21 @@ class PostQuery
    *
    * @access private
    * @param string $val ファイルのname属性値
-   * @return string $image 画像名
+   * @return string|null $image 画像名
    */
-  private static function createImage(string $val): string
+  private static function createImage(string $val): string|false
   {
     $rand = mt_rand();
-    $image = uniqid((string) $rand, false);
-    $image .= '.' . substr(strrchr($_FILES[$val]['name'], '.'), 1);
 
+    /** @var string */
+    $image = uniqid((string) $rand, true);
+
+    if (!empty($_FILES[$val]['name'])) {
+      /** @var string|false */
+      $image .= '.' . substr(strrchr($_FILES[$val]['name'], '.'), 1);
+    } else {
+      return false;
+    }
     return $image;
   }
 
@@ -367,7 +374,7 @@ class PostQuery
   {
     // バリデーション
     if (!($post->isValidTitle($post->title)
-      * $post->isValidCategories($post->selected_categories)
+      * $post->isValidCategory($post->selected_category)
       * $post->isValidContent($post->content)
     )) {
       return false;
@@ -377,7 +384,7 @@ class PostQuery
     $db = new DB();
 
     /** @var string */
-    $image = static::createImage('uploadImage');
+    $sql = 'INSERT INTO `posts` (title, image, content, status, user_id) VALUES (:title, :image, :content, :status, :user_id);';
 
     /** @var string */
     $file_name = $_FILES['uploadImage']['name'];
@@ -385,14 +392,14 @@ class PostQuery
     /** @var string */
     $tmp_name = $_FILES['uploadImage']['tmp_name'];
 
-    /** @var string サムネイル画像名を含む、画像の移動先 */
+    /** @var string|false */
+    $image = static::createImage('uploadImage');
+
+    /** @var string|false サムネイル画像名を含む、画像の移動先 */
     $image_path = BASE_SOURCE_PATH . 'storage/images/' . $image;
 
-    /** @var string */
-    $sql = 'INSERT INTO `posts` (title, image, content, status, user_id) VALUES (:title, :image, :content, :status, :user_id);';
-
     if (!empty($file_name)) {
-      if (is_image($image_path)) {
+      if (is_image($image)) {
         $result = $db->execute($sql, [
           ':title' => $post->title,
           ':image' => $image,
@@ -457,7 +464,7 @@ class PostQuery
     $db = new DB();
 
     /** @var string */
-    $image = static::createImage('uploadImage');
+    $sql = 'UPDATE `posts` set `title` = :title, `image` = :image, `content` = :content, `status` = :status WHERE id = :id;';
 
     /** @var string */
     $file_name = $_FILES['uploadImage']['name'];
@@ -465,14 +472,14 @@ class PostQuery
     /** @var string */
     $tmp_name = $_FILES['uploadImage']['tmp_name'];
 
-    /** @var string サムネイル画像名を含む、画像の移動先 */
+    /** @var string|false */
+    $image = static::createImage('uploadImage');
+
+    /** @var string|false サムネイル画像名を含む、画像の移動先 */
     $image_path = BASE_SOURCE_PATH . 'storage/images/' . $image;
 
-    /** @var string */
-    $sql = 'UPDATE `posts` set `title` = :title, `image` = :image, `content` = :content, `status` = :status WHERE id = :id;';
-
     if (!empty($file_name)) {
-      if (is_image($image_path)) {
+      if (is_image($image)) {
         $result = $db->execute($sql, [
           ':id' => $post->id,
           ':title' => $post->title,

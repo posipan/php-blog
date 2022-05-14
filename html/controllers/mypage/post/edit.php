@@ -33,11 +33,8 @@ function get(): void
   /** @var object 記事の編集に失敗した場合、直前の入力内容を取得 */
   $post = PostModel::getSessionAndFlush();
 
-  /** @var array|false */
-  $all_categories = CategoryQuery::fetchAllCategories();
-
   if (!empty($post)) {
-    \view\mypage\post\edit\index($post, $all_categories, $post->selected_categories);
+    \view\mypage\post\edit\index($post, $post->selected_category_id);
     return;
   }
 
@@ -55,10 +52,7 @@ function get(): void
   /** @var object|false */
   $fetchedPost = PostQuery::fetchPost($post);
 
-  /** @var int[] */
-  $post->selected_categories = array_map('intval', str_to_array($fetchedPost->selected_categories));
-
-  \view\mypage\post\edit\index($fetchedPost, $all_categories, $post->selected_categories);
+  \view\mypage\post\edit\index($fetchedPost);
 }
 
 /**
@@ -102,19 +96,14 @@ function post(): mixed
     /** @var int */
     $update_post->status = (int) get_param('status', null);
 
+    /** @var int */
+    $update_post->selected_category_id = (int) get_param('category', null);
+
     /** @var \model\CategoryRelationshipModel */
     $category_relationship = new CategoryRelationshipModel();
 
     /** @var int */
     $category_relationship->post_id = $update_post->id;
-
-    /** @var string|array|null */
-    $update_post->selected_categories = get_param('categories', null);
-
-    if (!empty($update_post->selected_categories)) {
-      /** @var int[] */
-      $update_post->selected_categories = array_map('intval', $update_post->selected_categories);
-    }
 
     /** @var object */
     $user = UserModel::getSession();
@@ -127,7 +116,7 @@ function post(): mixed
 
       $db->begin();
 
-      if (!($update_post->isValidCategories($update_post->selected_categories))) {
+      if (!($update_post->isValidCategory($update_post->selected_category_id))) {
         return false;
       }
 
@@ -136,12 +125,8 @@ function post(): mixed
       $is_success = CategoryRelationshipQuery::delete($update_post);
 
       if ($is_success) {
-        foreach ($update_post->selected_categories as $category_id) {
-          /** @var int category_id */
-
           // カテゴリーリレーションの登録処理
-          $is_success = CategoryRelationshipQuery::insert($update_post->id, $category_id);
-        }
+          $is_success = CategoryRelationshipQuery::insert($update_post, $category_relationship);
       }
 
       if ($is_success) {

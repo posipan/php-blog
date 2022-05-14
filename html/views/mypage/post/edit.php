@@ -10,18 +10,19 @@ declare(strict_types=1);
 
 namespace view\mypage\post\edit;
 
+use db\CategoryQuery;
 use model\PostModel;
 
 /**
  * 記事編集ページを出力
  *
  * @param array|object|false $post 現行記事の情報
- * @param array $all_categories 全てのカテゴリー
- * @param string|array|null $selected_categories 選択したカテゴリー
  * @return void
  */
-function index(array|object|false $post, array $all_categories, string|array|null $selected_categories): void
+function index(array|object|false $post): void
 {
+  /** @var array|false */
+  $all_categories = CategoryQuery::fetchAllCategories();
 ?>
   <h1 class="page-title">記事を編集する</h1>
 
@@ -42,14 +43,12 @@ function index(array|object|false $post, array $all_categories, string|array|nul
           <?php
           foreach ($all_categories as $category) :
           ?>
-            <div class="form__checkbox">
-              <input type="checkbox" name="categories[]" value="<?php echo $category->id; ?>" class="category__<?php echo $category->slug; ?>" id="category__<?php echo $category->slug; ?>"
+            <div class="form__radio">
+              <input type="radio" name="category" value="<?php echo $category->id; ?>" id="category__<?php echo $category->slug; ?>"
               <?php
-              if (!empty($selected_categories)) {
-                foreach ($selected_categories as $select_category_id) {
-                  if ($category->id === $select_category_id) {
-                    echo 'checked';
-                  }
+              if (!empty($post->selected_category_id)) {
+                if ($category->id === $post->selected_category_id) {
+                  echo 'checked';
                 }
               }
               ?>
