@@ -41,16 +41,26 @@ function index(array|object|false $posts, int $start, float $pages): void
     }
     ?>
   </div>
+  <?php /*
   <div class="pagination">
+    <ul class="pagination__list">
     <?php for ($i = 1; $i <= $pages; $i++) : ?>
       <?php if ($i === $start) : ?>
-        <span><?php echo $start; ?></span>
+        <li class="pagination__item pagination__item--current">
+          <a><?php echo $start; ?></a>
+        </li>
       <?php else : ?>
-        <a href="<?php echo get_url('/?page=' . $i) ?>"><?php echo $i; ?></a>
+        <li class="pagination__item">
+          <a href="<?php echo get_url('/?page=' . $i) ?>"><?php echo $i; ?></a>
+        </li>
       <?php endif; ?>
     <?php endfor; ?>
+    </ul>
   </div>
+  */ ?>
 
 <?php
+\layout\pagination($start, $pages, '/?page=');
 }
+
 ?>
