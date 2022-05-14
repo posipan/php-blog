@@ -40,8 +40,7 @@ class PostQuery
     $db = new DB();
 
     /** @var string */
-    $sql = "
-      SELECT p.*, u.name as author_name, GROUP_CONCAT(DISTINCT c.id ORDER BY c.id ASC) as selected_categories
+    $sql = "SELECT p.*, u.name AS author_name, GROUP_CONCAT(DISTINCT c.id ORDER BY c.id ASC) AS selected_categories
       FROM `posts` p
       INNER JOIN `users` u
         ON p.user_id = u.id
@@ -78,8 +77,7 @@ class PostQuery
     $db = new DB();
 
     /** @var string */
-    $sql = "
-      SELECT p.*, GROUP_CONCAT(DISTINCT c.id ORDER BY c.id ASC) as selected_categories
+    $sql = "SELECT p.*, GROUP_CONCAT(DISTINCT c.id ORDER BY c.id ASC) AS selected_categories
       FROM `posts` p
       INNER JOIN `category_relationships` cr
         ON p.id = cr.post_id
@@ -96,18 +94,73 @@ class PostQuery
   }
 
   /**
+   * 記事数の取得を定義
+   *
+   * @param string $page ページ名
+   * @param string $param パラメータ
+   * @return int
+   */
+  public static function countAllPublishedPosts(string $page = '', string $param = ''): int
+  {
+    /** @var \db\DB */
+    $db = new DB();
+
+    if ($page === 'author') {
+      /** @var string */
+      $sql = "SELECT COUNT(*) AS count
+        FROM `posts` p
+        INNER JOIN `users` u
+          ON p.user_id = u.id
+        WHERE p.status = :status
+          AND u.name = :author_name;
+      ";
+
+      return $db->selectOne($sql, [
+        ':status' => PostModel::$PUBLISH,
+        ':author_name' => $param,
+      ], DB::CLS, PostModel::class)->count;
+    } else if ($page === 'category') {
+      /** @var string */
+      $sql = "SELECT COUNT(*) AS count
+        FROM `posts` p
+        INNER JOIN `users` u
+        ON p.user_id = u.id
+        INNER JOIN `category_relationships` cr
+          ON p.id = cr.post_id
+        INNER JOIN `categories` c
+          ON cr.category_id = c.id
+        WHERE p.status = :status
+          AND c.slug = :category_slug;
+      ";
+
+      return $db->selectOne($sql, [
+        ':status' => PostModel::$PUBLISH,
+        ':category_slug' => $param,
+      ], DB::CLS, PostModel::class)->count;
+    } else {
+      /** @var string */
+      $sql = "SELECT COUNT(*) AS count FROM `posts` p WHERE p.status = :status";
+
+      return $db->selectOne($sql, [
+        ':status' => PostModel::$PUBLISH,
+      ], DB::CLS, PostModel::class)->count;
+    }
+  }
+
+  /**
    * 全ての公開記事の取得を定義
    *
+   * @param int $start 開始位置
+   * @param int $max 最大取得数
    * @return array|object|false
    */
-  public static function fetchAllPublishedPosts(): array|object|false
+  public static function fetchAllPublishedPosts(int $start, int $max): array|object|false
   {
     /** @var \db\DB */
     $db = new DB();
 
     /** @var string */
-    $sql = "
-      SELECT p.*, u.name as author_name, GROUP_CONCAT(DISTINCT c.id ORDER BY c.id ASC) as selected_categories
+    $sql = "SELECT p.*, u.name AS author_name, GROUP_CONCAT(DISTINCT c.id ORDER BY c.id ASC) AS selected_categories
       FROM `posts` p
       INNER JOIN `users` u
         ON p.user_id = u.id
@@ -117,28 +170,40 @@ class PostQuery
         ON cr.category_id = c.id
       WHERE p.status = :status
       GROUP BY p.id
-      ORDER BY p.update_at DESC;
+      ORDER BY p.update_at DESC
+      LIMIT :start, :max;
     ";
 
-    return $db->select($sql, [
-      ':status' => PostModel::$PUBLISH,
-    ], DB::CLS, PostModel::class);
+    if ($start === 1) {
+      return $db->select($sql, [
+        ':status' => PostModel::$PUBLISH,
+        ':start' => $start - 1,
+        ':max' => $max,
+      ], DB::CLS, PostModel::class);
+    } else {
+      return $db->select($sql, [
+        ':status' => PostModel::$PUBLISH,
+        ':start' => ($start - 1) * MAX_VIEW,
+        ':max' => $max,
+      ], DB::CLS, PostModel::class);
+    }
   }
 
   /**
    * カテゴリーの公開記事の取得を定義
    *
    * @param string $category_slug カテゴリースラッグ名
+   * @param int $start 開始位置
+   * @param int $max 最大取得数
    * @return array|object|false
    */
-  public static function fetchCategoryAllPublishedPosts(string $category_slug): array|object|false
+  public static function fetchCategoryAllPublishedPosts(string $category_slug, int $start, int $max): array|object|false
   {
     /** @var \db\DB */
     $db = new DB();
 
     /** @var string */
-    $sql = "
-      SELECT p.*, u.name as author_name, GROUP_CONCAT(DISTINCT c.id ORDER BY c.id ASC) as selected_categories
+    $sql = "SELECT p.*, u.name AS author_name, GROUP_CONCAT(DISTINCT c.id ORDER BY c.id ASC) AS selected_categories
       FROM `posts` p
       INNER JOIN `users` u
         ON p.user_id = u.id
@@ -147,31 +212,44 @@ class PostQuery
       INNER JOIN `categories` c
         ON cr.category_id = c.id
       WHERE p.status = :status
-        and c.slug = :category_slug
+        AND c.slug = :category_slug
       GROUP BY p.id
-      ORDER BY p.update_at DESC;
+      ORDER BY p.update_at DESC
+      LIMIT :start, :max;
     ";
 
-    return $db->select($sql, [
-      ':status' => PostModel::$PUBLISH,
-      ':category_slug' => $category_slug,
-    ], DB::CLS, PostModel::class);
+    if ($start === 1) {
+      return $db->select($sql, [
+        ':status' => PostModel::$PUBLISH,
+        ':category_slug' => $category_slug,
+        ':start' => $start - 1,
+        ':max' => $max,
+      ], DB::CLS, PostModel::class);
+    } else {
+      return $db->select($sql, [
+        ':status' => PostModel::$PUBLISH,
+        ':category_slug' => $category_slug,
+        ':start' => ($start - 1) * MAX_VIEW,
+        ':max' => $max,
+      ], DB::CLS, PostModel::class);
+    }
   }
 
   /**
    * 作成者の公開記事の取得を定義
    *
    * @param string $author_name 作成者名
+   * @param int $start 開始位置
+   * @param int $max 最大取得数
    * @return array|object|false
    */
-  public static function fetchAuthorAllPublishedPosts(string $author_name): array|object|false
+  public static function fetchAuthorAllPublishedPosts(string $author_name, int $start, int $max): array|object|false
   {
     /** @var \db\DB */
     $db = new DB();
 
     /** @var string */
-    $sql = "
-      SELECT p.*, u.name as author_name, GROUP_CONCAT(DISTINCT c.id ORDER BY c.id ASC) as selected_categories
+    $sql = "SELECT p.*, u.name AS author_name, GROUP_CONCAT(DISTINCT c.id ORDER BY c.id ASC) AS selected_categories
       FROM `posts` p
       INNER JOIN `users` u
         ON p.user_id = u.id
@@ -180,15 +258,27 @@ class PostQuery
       INNER JOIN `categories` c
         ON cr.category_id = c.id
       WHERE p.status = :status
-        and u.name = :author_name
+        AND u.name = :author_name
       GROUP BY p.id
-      ORDER BY p.update_at DESC;
+      ORDER BY p.update_at DESC
+      LIMIT :start, :max;
     ";
 
-    return $db->select($sql, [
-      ':status' => PostModel::$PUBLISH,
-      ':author_name' => $author_name,
-    ], DB::CLS, PostModel::class);
+    if ($start === 1) {
+      return $db->select($sql, [
+        ':status' => PostModel::$PUBLISH,
+        ':author_name' => $author_name,
+        ':start' => $start - 1,
+        ':max' => $max,
+      ], DB::CLS, PostModel::class);
+    } else {
+      return $db->select($sql, [
+        ':status' => PostModel::$PUBLISH,
+        ':author_name' => $author_name,
+        ':start' => ($start - 1) * MAX_VIEW,
+        ':max' => $max,
+      ], DB::CLS, PostModel::class);
+    }
   }
 
   /**
@@ -215,7 +305,7 @@ class PostQuery
     $db = new DB();
 
     /** @var string */
-    $sql = "SELECT count(*) as count FROM `posts` WHERE `id` = :id and user_id = :user_id;";
+    $sql = "SELECT COUNT(*) AS count FROM `posts` WHERE `id` = :id AND `user_id` = :user_id;";
 
     /** @var array|object|false */
     $result = $db->selectOne($sql, [

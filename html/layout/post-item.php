@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 記事アイテム
+ * 記事アイテムファイル
  *
  * @access public
  * @author Posipan
