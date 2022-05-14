@@ -14,11 +14,11 @@ namespace layout;
  * ページネーションを出力
  *
  * @param int $start
- * @param int $pages
+ * @param float $pages
  * @param string $url
  * @return void
  */
-function pagination(int $start, int $pages, string $url): void
+function pagination(int $start, float $pages, string $url): void
 {
 ?>
 
