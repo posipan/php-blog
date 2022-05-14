@@ -13,9 +13,12 @@ namespace layout;
 /**
  * ページネーションを出力
  *
+ * @param int $start
+ * @param int $pages
+ * @param string $url
  * @return void
  */
-function pagination($start, $pages, $url): void
+function pagination(int $start, int $pages, string $url): void
 {
 ?>
 
