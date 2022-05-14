@@ -10,27 +10,23 @@ declare(strict_types=1);
 
 namespace view\post;
 
-use DateTime;
+use db\CategoryQuery;
 
 /**
  * 記事詳細ページを表示
  *
  * @param object $post 記事の詳細
- * @param array $all_categories 全てのカテゴリー
  * @return void
  */
-function index(object $post, array $all_categories): void
+function index(object $post): void
 {
-  /** @var (string|\Closure)[] */
+  /** @var array|false */
+  $all_categories = CategoryQuery::fetchAllCategories();
+
   $urls = [
     'author' => get_url('author?name=' . $post->author_name),
-    'category' => function(string $slug): string {
-      return get_url('category?slug=' . $slug);
-    },
+    'category' => get_url('category?name=' . $all_categories[$post->selected_category_id - 1]->name),
   ];
-
-  /** @var array */
-  $post->selected_categories = str_to_array($post->selected_categories);
 
   /** @var \cebe\markdown\Markdown */
   $parser = new \cebe\markdown\Markdown();
@@ -42,12 +38,13 @@ function index(object $post, array $all_categories): void
     <div class="post__header">
       <p class="post__category">
         <?php
-        foreach ($post->selected_categories as $category_id) :
-          $slug = $all_categories[$category_id - 1]->slug;
-          $name = $all_categories[$category_id - 1]->name;
+        /** @var string */
+        $slug = $all_categories[$post->selected_category_id - 1]->slug;
+
+        /** @var string */
+        $name = $all_categories[$post->selected_category_id - 1]->name;
         ?>
-          <a href="<?php echo $urls['category']($slug); ?>" class="tag tag--<?php echo $slug; ?>"><?php echo escape($name); ?></a>
-        <?php endforeach; ?>
+        <a href="<?php echo $urls['category'] . '&page=1'; ?>" class="tag tag--<?php echo $slug; ?>"><?php echo escape($name); ?></a>
       </p>
 
       <h1 class="post__title"><?php echo escape($post->title); ?></h1>
@@ -57,7 +54,7 @@ function index(object $post, array $all_categories): void
 
       <p class="post__author">
         <span class="icon"><i class="fa-solid fa-user"></i></span>
-        <a href="<?php echo $urls['author']; ?>"><?php echo escape($post->author_name); ?></a>
+        <a href="<?php echo $urls['author'] . '&page=1'; ?>"><?php echo escape($post->author_name); ?></a>
       </p>
     </div>
 

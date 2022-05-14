@@ -10,15 +10,19 @@ declare(strict_types=1);
 
 namespace view\mypage\post\archive;
 
+use db\CategoryQuery;
+
 /**
  * マイポストページを表示
  *
  * @param array|object|false $posts ユーザーの記事情報
- * @param array $all_categories 全てのカテゴリー
+ * @param int $start 開始位置
+ * @param int $max 最大取得数
  * @return void
  */
-function index(array|object|false $posts, array $all_categories): void
+function index(array|object|false $posts, int $start, float $pages): void
 {
+  $all_categories = CategoryQuery::fetchAllCategories();
 ?>
 
   <h1 class="page-title">マイポスト</h1>
@@ -32,11 +36,21 @@ function index(array|object|false $posts, array $all_categories): void
       foreach ($posts as $post) {
         /** @var string[] */
         $urls = [
-          'edit' => get_url('mypage/post/edit?id=' . $post->id)
+          'edit' => get_url('mypage/post/edit?id=' . $post->id),
         ];
         \layout\mypage_post_item($post, $all_categories, $urls);
       }
       ?>
+    </div>
+
+    <div class="pagination">
+      <?php for ($i = 1; $i <= $pages; $i++) : ?>
+        <?php if ($i === $start) : ?>
+          <span><?php echo $start; ?></span>
+        <?php else : ?>
+          <a href="<?php echo get_url('/mypage/post/archive?page=' . $i) ?>"><?php echo $i; ?></a>
+        <?php endif; ?>
+      <?php endfor; ?>
     </div>
 
     <div class="post__footer">

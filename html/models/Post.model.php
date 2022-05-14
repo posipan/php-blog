@@ -41,8 +41,8 @@ class PostModel extends AbstractModel
   /** @var string */
   public string $author_name;
 
-  /** @var string|array|null 取得したデータはString型、それを変換したデータはArray型 */
-  public string|array|null $selected_categories;
+  /** @var int */
+  public int $selected_category_id;
 
   /**
    * @var string タイトルの最大入力文字数
@@ -120,18 +120,18 @@ class PostModel extends AbstractModel
    *
    * @return bool
    */
-  public function isValidCategories(): bool
+  public function isValidCategory(): bool
   {
-    return static::validateCategories($this->selected_categories);
+    return static::validateCategory($this->selected_category_id);
   }
 
   /**
    * カテゴリーのバリデーション（static）
    *
-   * @param array|null $val カテゴリー
+   * @param int $val カテゴリーID
    * @return bool $result
    */
-  public static function validateCategories(array|null $val): bool
+  public static function validateCategory(int $val): bool
   {
     $result = true;
 

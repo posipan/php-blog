@@ -15,14 +15,10 @@ namespace layout;
  *
  * @param object $post 記事
  * @param array $all_categories 全てのカテゴリー
- * @param (string|\Closure)[] $urls 各種URL
  * @return void
  */
 function mypage_post_item(object $post, array $all_categories, array $urls): void
 {
-  /** @var array */
-  $post->selected_categories = str_to_array($post->selected_categories);
-
   /** @var string */
   $status_label = $post->status ? '公開済み' : '下書き';
 
@@ -46,12 +42,13 @@ function mypage_post_item(object $post, array $all_categories, array $urls): voi
     <div class="post-item__desc">
       <p class="post-item__category">
         <?php
-        foreach ($post->selected_categories as $category_id) :
-          $slug = $all_categories[$category_id - 1]->slug;
-          $name = $all_categories[$category_id - 1]->name;
+          /** @var string */
+          $slug = $all_categories[$post->selected_category_id - 1]->slug;
+
+          /** @var string */
+          $name = $all_categories[$post->selected_category_id - 1]->name;
         ?>
           <a class="tag tag--<?php echo $slug; ?>"><?php echo escape($name); ?></a>
-        <?php endforeach; ?>
       </p>
 
       <h2 class="post-item__title">
