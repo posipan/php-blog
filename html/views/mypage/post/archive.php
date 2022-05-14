@@ -42,16 +42,7 @@ function index(array|object|false $posts, int $start, float $pages): void
       }
       ?>
     </div>
-
-    <div class="pagination">
-      <?php for ($i = 1; $i <= $pages; $i++) : ?>
-        <?php if ($i === $start) : ?>
-          <span><?php echo $start; ?></span>
-        <?php else : ?>
-          <a href="<?php echo get_url('/mypage/post/archive?page=' . $i) ?>"><?php echo $i; ?></a>
-        <?php endif; ?>
-      <?php endfor; ?>
-    </div>
+    <?php \layout\pagination($start, $pages, '/mypage/post/archive?page='); ?>
 
     <div class="post__footer">
       <a href="<?php the_url('/'); ?>" class="btn btn--secondary">記事一覧に戻る</a>

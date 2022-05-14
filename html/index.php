@@ -51,6 +51,7 @@ require_once BASE_SOURCE_PATH . 'layout/header.php';
 require_once BASE_SOURCE_PATH . 'layout/footer.php';
 require_once BASE_SOURCE_PATH . 'layout/post-item.php';
 require_once BASE_SOURCE_PATH . 'layout/mypage-post-item.php';
+require_once BASE_SOURCE_PATH . 'layout/pagination.php';
 
 // View
 require_once BASE_SOURCE_PATH . 'views/login.php';

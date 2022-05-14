@@ -44,16 +44,8 @@ function index(array|object|false $posts, int $start, float $pages, string $cate
     }
     ?>
   </div>
-  <div class="pagination">
-    <?php for ($i = 1; $i <= $pages; $i++) : ?>
-      <?php if ($i === $start) : ?>
-        <span><?php echo $start; ?></span>
-      <?php else : ?>
-        <a href="<?php echo $urls['category'] . '&page=' . $i; ?>"><?php echo $i; ?></a>
-      <?php endif; ?>
-    <?php endfor; ?>
-  </div>
 
 <?php
+\layout\pagination($start, $pages, $urls['category'] . '&page=');
 }
 ?>
