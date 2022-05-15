@@ -21,7 +21,11 @@ use model\UserModel;
  */
 function get(): void
 {
-  \view\register\index();
+  if (!Auth::isLogin()) {
+    \view\register\index();
+  } else {
+    redirect(GO_HOME);
+  }
 }
 
 /**
