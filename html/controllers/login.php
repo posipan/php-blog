@@ -46,7 +46,7 @@ function post()
     $user = UserModel::getSession();
 
     Msg::push(Msg::INFO, "ようこそ、{$user->name} さん！");
-    redirect(GO_HOME);
+    redirect('mypage/post/archive');
   } else {
     redirect(GO_REFERER);
   }
