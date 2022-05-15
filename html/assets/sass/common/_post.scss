@@ -24,9 +24,34 @@
 
 // Archive
 .archive {
-  display: grid;
-  gap: 1.6rem;
-  grid-template-columns: repeat(3, 1fr);
+  &__create {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2.4rem;
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  &__list {
+    display: grid;
+    gap: 1.6rem;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &__footer {
+    margin-top: 4.8rem;
+    padding-top: 4.8rem;
+    border-top: 1px solid $secondary-color;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+
+    .btn {
+      width: 100%;
+    }
+  }
 }
 
 // Post Item
@@ -129,6 +154,10 @@
 
 // Single Post
 .post {
+  .form__control {
+    margin-bottom: 4.8rem;
+  }
+
   &__header {
     margin-bottom: 2.4rem;
   }
@@ -151,8 +180,6 @@
     span {
       margin-left: 0.8rem;
     }
-
-    ;
   }
 
   &__author {
@@ -171,7 +198,6 @@
   &__image {
     width: 100%;
     height: 40rem;
-    margin-bottom: 2.4rem;
 
     img {
       height: 100%;
@@ -225,18 +251,53 @@
   }
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (max-width: $bp) {
 
   // Archive
   .archive {
-    gap: 2.4rem;
-    grid-template-columns: repeat(1, 1fr);
+    &__list {
+      gap: 2.4rem;
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    &__footer {
+      margin-top: 3.2rem;
+      padding-top: 3.2rem;
+    }
   }
 
   // Post Item
   .post-item {
     &__image {
       height: 44vw;
+    }
+  }
+
+  // Single Post
+  .post {
+    .form__control {
+      margin-bottom: 3.2rem;
+    }
+
+    &__title {
+      font-size: 2.6rem;
+    }
+
+    &__image {
+      height: 44vw;
+    }
+
+    &__content {
+
+      h1,
+      h2 {
+        margin: 3.2rem 0 2.4rem;
+      }
+    }
+
+    &__footer {
+      margin-top: 3.2rem;
+      padding-top: 3.2rem;
     }
   }
 }

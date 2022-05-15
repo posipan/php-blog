@@ -62,17 +62,19 @@ function index(array|object|false $post): void
       </div>
 
       <div class="form__control">
-        <p class="form__label">サムネイル</p>
+        <p class="form__label">サムネイル画像</p>
         <div class="form__content">
-          <div class="form__imagePreview" id="form__imagePreview">
-            <span class="deleteImage" id="deleteImage">削除</span>
-            <img src="<?php if (is_valid_image($post->image)) { echo BASE_STORAGE_PATH . 'images/' . $post->image; } ?>" id="imagePreview" class="imagePreview <?php  if (is_valid_image($post->image)) { echo 'active'; } ?>" alt="">
-            <input type="hidden" name="image" id="hiddenImage" value="<?php if(is_valid_image($post->image)) { echo $post->image; } ?>">
+          <div class="form__preview" id="form__preview">
+            <span class="delete-image" id="delete-image">削除</span>
+
+            <img src="<?php if (is_valid_image($post->image)) { echo BASE_STORAGE_PATH . 'images/' . $post->image; } ?>" id="preview" class="preview <?php  if (is_valid_image($post->image)) { echo 'active'; } ?>" alt="">
+
+            <input type="hidden" name="image" id="hidden-image" value="<?php if(is_valid_image($post->image)) { echo $post->image; } ?>">
           </div>
 
           <div class="form__image" id="form__image">
-            <label for="uploadImage" class="form__imageLabel">
-              <input type="file" accept="image/*" name="uploadImage" id="uploadImage" />
+            <label for="upload-image" class="form__imageLabel">
+              <input type="file" accept="image/*" name="upload-image" id="upload-image" />
               <a>サムネイルを設定する</a>
             </label>
           </div>
@@ -97,11 +99,13 @@ function index(array|object|false $post): void
       </div>
 
       <div class="form__btn">
-        <a class="btn btn--cancel" id="cancel" onclick="return confirm('この記事の編集をキャンセルしますか？');" href="<?php the_url('mypage/post/archive'); ?>">キャンセル</a>
         <button type="submit" name="dispatch" value="<?php echo PostModel::$UPDATE; ?>" class="btn btn--accent">更新する</button>
+        <a class="btn btn--cancel" id="cancel" onclick="return confirm('この記事の編集をキャンセルしますか？');" href="<?php the_url('mypage/post/archive'); ?>">キャンセル</a>
       </div>
 
-      <p class="form__delete"><button type="submit" name="dispatch" value="<?php echo PostModel::$DELETE; ?>" onclick="return confirm('この記事を削除しますか？');">この記事を削除する</button></p>
+      <div class="form__delete">
+        <button type="submit" name="dispatch" value="<?php echo PostModel::$DELETE; ?>" onclick="return confirm('この記事を削除しますか？');">この記事を削除する</button>
+      </div>
     </form>
   </div>
 <?php

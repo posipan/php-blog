@@ -15,18 +15,15 @@
   cursor: pointer;
   transition: 0.2s ease all;
   text-align: center;
-  margin-right: 1.6rem;
-  &:last-child {
-    margin-right: 0;
-  }
 
   &--accent {
     border-color: $accent-color;
     background: $accent-color;
-    color: $white !important;
+    color: $white  !important;
+
     &:hover {
       background: transparent;
-      color: $accent-color !important;
+      color: $accent-color  !important;
     }
   }
 
@@ -34,6 +31,7 @@
     border-color: $secondary-color;
     background: $secondary-color;
     color: $white;
+
     &:hover {
       background: transparent;
       color: $secondary-color;
@@ -44,6 +42,7 @@
     background: transparent;
     border-color: #aaa;
     color: #aaa;
+
     &:hover {
       background: #aaa;
       color: $white;
@@ -51,15 +50,18 @@
   }
 }
 
+// Box
 .box {
   padding: 3.2rem;
   background: $white;
   border-radius: 0.8rem;
+
   &--post {
     padding: 3.2rem 3.2rem 4.8rem;
   }
 }
 
+// Page Title
 .page-title {
   font-size: 2.4rem;
   font-weight: 700;
@@ -67,12 +69,12 @@
   margin-bottom: 2.4rem;
 }
 
-.title {
-  font-size: 2rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 2.4rem;
-}
+// .title {
+//   font-size: 2rem;
+//   font-weight: 700;
+//   text-align: center;
+//   margin-bottom: 2.4rem;
+// }
 
 .tag {
   display: inline-block;
@@ -113,6 +115,7 @@
   }
 }
 
+// Toast
 .toast {
   // position: fixed;
   // left: 50%;
@@ -135,18 +138,31 @@
     z-index: 1;
     visibility: hidden;
     transform: translate(-50%, 0);
+
     &.active {
       visibility: visible;
       animation: fadein 0.5s, fadeout 0.5s 3.5s;
     }
   }
+
   &--danger {
     background: #e92f2f;
   }
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (max-width: $bp) {
+
+  // Button
   .btn {
     font-size: 1.4rem !important;
+  }
+
+  // Box
+  .box {
+    padding: 2rem;
+
+    &--post {
+      padding: 2rem 2rem 3.2rem;
+    }
   }
 }

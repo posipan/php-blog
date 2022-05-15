@@ -6,11 +6,13 @@
 
   &__list {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
   }
 
   &__item {
     margin-right: 1.6rem;
+    margin-bottom: 1.6rem;
 
     &:last-child {
       margin-right: 0;
@@ -38,6 +40,17 @@
         background: $accent-color;
         color: $white;
       }
+    }
+  }
+}
+
+@media screen and (max-width: $bp) {
+  .pagination {
+    margin-top: 3.2rem;
+
+    &__item {
+      margin-right: 1.2rem;
+      margin-bottom: 1.2rem;
     }
   }
 }

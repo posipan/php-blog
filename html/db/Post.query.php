@@ -387,13 +387,13 @@ class PostQuery
     $sql = 'INSERT INTO `posts` (title, image, content, status, user_id) VALUES (:title, :image, :content, :status, :user_id);';
 
     /** @var string */
-    $file_name = $_FILES['uploadImage']['name'];
+    $file_name = $_FILES['upload-image']['name'];
 
     /** @var string */
-    $tmp_name = $_FILES['uploadImage']['tmp_name'];
+    $tmp_name = $_FILES['upload-image']['tmp_name'];
 
     /** @var string|false */
-    $image = static::createImage('uploadImage');
+    $image = static::createImage('upload-image');
 
     /** @var string|false サムネイル画像名を含む、画像の移動先 */
     $image_path = BASE_SOURCE_PATH . 'storage/images/' . $image;
@@ -467,13 +467,13 @@ class PostQuery
     $sql = 'UPDATE `posts` set `title` = :title, `image` = :image, `content` = :content, `status` = :status WHERE id = :id;';
 
     /** @var string */
-    $file_name = $_FILES['uploadImage']['name'];
+    $file_name = $_FILES['upload-image']['name'];
 
     /** @var string */
-    $tmp_name = $_FILES['uploadImage']['tmp_name'];
+    $tmp_name = $_FILES['upload-image']['tmp_name'];
 
     /** @var string|false */
-    $image = static::createImage('uploadImage');
+    $image = static::createImage('upload-image');
 
     /** @var string|false サムネイル画像名を含む、画像の移動先 */
     $image_path = BASE_SOURCE_PATH . 'storage/images/' . $image;

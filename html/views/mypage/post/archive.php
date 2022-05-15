@@ -27,10 +27,9 @@ function index(array|object|false $posts, int $start, float $pages): void
 
   <h1 class="page-title">マイポスト</h1>
 
-  <div class="user-post">
-    <p class="user-post__create"><a href="<?php the_url('mypage/post/create'); ?>" class="btn btn--accent">記事を作成する</a></p>
-
-    <div class="archive">
+  <div class="archive">
+    <p class="archive__create"><a href="<?php the_url('mypage/post/create'); ?>" class="btn btn--accent">記事を作成する</a></p>
+    <div class="archive__list">
       <?php
       /** @var object $post */
       foreach ($posts as $post) {
@@ -38,16 +37,20 @@ function index(array|object|false $posts, int $start, float $pages): void
         $urls = [
           'edit' => get_url('mypage/post/edit?id=' . $post->id),
         ];
+
         \layout\mypage_post_item($post, $all_categories, $urls);
       }
       ?>
     </div>
+
     <?php \layout\pagination($start, $pages, '/mypage/post/archive?page='); ?>
 
-    <div class="post__footer">
-      <a href="<?php the_url('/'); ?>" class="btn btn--secondary">記事一覧に戻る</a>
-    </div>
+    <div class="archive__footer">
+    <a href="<?php the_url('/'); ?>" class="btn btn--secondary">記事一覧に戻る</a>
   </div>
+  </div>
+
+
 
 <?php
 }

@@ -119,7 +119,7 @@
   }
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (max-width: $bp) {
   .header {
     &__inner {
       padding: 0 1.6rem;

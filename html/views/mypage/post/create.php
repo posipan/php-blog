@@ -25,7 +25,7 @@ function index(array|object|false $post): void
 ?>
   <h1 class="page-title">記事を作成する</h1>
 
-  <div class="box box--post">
+  <div class="post box box--post">
     <form action="<?php echo CURRENT_URI; ?>" method="POST" enctype="multipart/form-data" class="form form--post" id="form--post">
       <div class="form__control">
         <p class="form__label">タイトル</p>
@@ -59,17 +59,19 @@ function index(array|object|false $post): void
       </div>
 
       <div class="form__control">
-        <p class="form__label">サムネイル</p>
+        <p class="form__label">サムネイル画像</p>
         <div class="form__content">
-          <div class="form__imagePreview" id="form__imagePreview">
-            <span class="deleteImage" id="deleteImage">削除</span>
-            <img src="<?php if (is_valid_image($post->image)) { echo BASE_STORAGE_PATH . 'images/' . $post->image; } ?>" id="imagePreview" class="imagePreview <?php  if (is_valid_image($post->image)) { echo 'active'; } ?>" alt="">
-            <input type="hidden" name="image" id="hiddenImage" value="<?php if(is_valid_image($post->image)) { echo $post->image; } ?>">
+          <div class="form__preview" id="form__preview">
+            <span class="delete-image" id="delete-image">削除</span>
+
+            <img src="<?php if (is_valid_image($post->image)) { echo BASE_STORAGE_PATH . 'images/' . $post->image; } ?>" id="preview" class="preview <?php  if (is_valid_image($post->image)) { echo 'active'; } ?>" alt="">
+
+            <input type="hidden" name="image" id="hidden-image" value="<?php if(is_valid_image($post->image)) { echo $post->image; } ?>">
           </div>
 
           <div class="form__image" id="form__image">
-            <label for="uploadImage" class="form__imageLabel">
-              <input type="file" accept="image/*" name="uploadImage" id="uploadImage" />
+            <label for="upload-image">
+              <input type="file" accept="image/*" name="upload-image" id="upload-image" />
               <a>サムネイルを設定する</a>
             </label>
           </div>
@@ -94,8 +96,8 @@ function index(array|object|false $post): void
       </div>
 
       <div class="form__btn">
-        <a class="btn btn--cancel" id="cancel" onclick="return confirm('この記事の作成をキャンセルしますか？');" href="<?php the_url('mypage/post/archive'); ?>">キャンセル</a>
         <button type="submit" id="save" class="btn btn--accent">保存</button>
+        <a class="btn btn--cancel" id="cancel" onclick="return confirm('この記事の作成をキャンセルしますか？');" href="<?php the_url('mypage/post/archive'); ?>">キャンセル</a>
       </div>
 
     </form>
