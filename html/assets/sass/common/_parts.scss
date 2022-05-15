@@ -5,13 +5,12 @@
 // Button
 .btn {
   display: block;
-  border-radius: 9999px;
+  border-radius: 10000rem;
   font-size: 1.6rem;
   padding: 0.8rem 2.4rem !important;
-  border-width: 2px;
+  border-width: 0.2rem;
   border-style: solid;
-  max-width: 240px;
-  min-width: 160px;
+  max-width: 24rem;
   cursor: pointer;
   transition: 0.2s ease all;
   text-align: center;
@@ -75,13 +74,6 @@
   margin-bottom: 2.4rem;
 }
 
-// .title {
-//   font-size: 2rem;
-//   font-weight: 700;
-//   text-align: center;
-//   margin-bottom: 2.4rem;
-// }
-
 .tag {
   display: inline-block;
   background: skyblue;
@@ -90,7 +82,7 @@
   color: $white;
   padding: 0.6rem 1.2rem;
   margin: 0 0.4rem 0.4rem 0;
-  border-radius: 9999px;
+  border-radius: 10000rem;
 
   &--travel {
     background: #00BFB2;
@@ -123,32 +115,28 @@
 
 // Toast
 .toast {
-  // position: fixed;
-  // left: 50%;
-  // bottom: 3rem;
-  // visibility: hidden;
-  width: 320px;
+  position: fixed;
+  left: 50%;
+  bottom: 4rem;
+  visibility: hidden;
+  max-width: 32rem;
+  width: 100%;
   font-size: 1.2rem;
   color: #fff;
   text-align: center;
-  border-radius: 4px;
+  border-radius: 0.4rem;
   padding: 1.2rem;
   z-index: 1;
   margin: 0 auto 1.2rem;
+  transform: translate(-50%, 0);
+
+  &.active {
+    visibility: visible;
+    animation: fadein 0.5s, fadeout 0.5s 3.5s;
+  }
 
   &--info {
     background: #39991f;
-    position: fixed;
-    left: 50%;
-    bottom: 3rem;
-    z-index: 1;
-    visibility: hidden;
-    transform: translate(-50%, 0);
-
-    &.active {
-      visibility: visible;
-      animation: fadein 0.5s, fadeout 0.5s 3.5s;
-    }
   }
 
   &--danger {

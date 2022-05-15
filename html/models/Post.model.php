@@ -101,12 +101,12 @@ class PostModel extends AbstractModel
     $result = true;
 
     if (empty($val)) {
-      Msg::push(Msg::ERROR, 'タイトルを入力してください。');
+      Msg::push(Msg::DEBUG, 'タイトルを入力してください。');
 
       $result = false;
     } else {
       if (mb_strlen($val) > static::MAX_TITLE_LEN) {
-        Msg::push(Msg::ERROR, 'タイトルは80文字以下で入力してください。');
+        Msg::push(Msg::DEBUG, 'タイトルは80文字以下で入力してください。');
 
         $result = false;
       }
@@ -136,7 +136,7 @@ class PostModel extends AbstractModel
     $result = true;
 
     if (empty($val)) {
-      Msg::push(Msg::ERROR, 'カテゴリーを設定してください。');
+      Msg::push(Msg::DEBUG, 'カテゴリーを設定してください。');
       $result = false;
     }
 
@@ -164,7 +164,7 @@ class PostModel extends AbstractModel
     $result = true;
 
     if (empty($val)) {
-      Msg::push(Msg::ERROR, '本文を入力してください。');
+      Msg::push(Msg::DEBUG, '本文を入力してください。');
       $result = false;
     }
 

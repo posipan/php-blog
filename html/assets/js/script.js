@@ -67,7 +67,7 @@ validateForm();
  */
 function showToastInfo() {
   const TIME = 4000;
-  const $toastElm = document.querySelector('.toast.toast--info');
+  const $toastElm = document.querySelector('.toast');
 
   if ($toastElm !== null) {
     $toastElm.classList.add('active');

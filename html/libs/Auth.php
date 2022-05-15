@@ -57,10 +57,10 @@ class Auth
 
           UserModel::setSession($user);
         } else {
-          Msg::push(Msg::ERROR, 'メールアドレスまたはパスワードに誤りがあります。');
+          Msg::push(Msg::DEBUG, 'メールアドレスまたはパスワードに誤りがあります。');
         }
       } else {
-        Msg::push(Msg::ERROR, 'メールアドレスまたはパスワードに誤りがあります。');
+        Msg::push(Msg::DEBUG, 'メールアドレスまたはパスワードに誤りがあります。');
       }
     } catch (Throwable $e) {
       $is_success = false;
@@ -91,17 +91,17 @@ class Auth
       $is_success = false;
 
       if (!empty(UserQuery::fetchByName($user->name))) {
-        Msg::push(Msg::ERROR, 'すでに登録されているユーザー名です。');
+        Msg::push(Msg::DEBUG, 'すでに登録されているユーザー名です。');
         return false;
       }
 
       if (!empty(UserQuery::fetchByEmail($user->email))) {
-        Msg::push(Msg::ERROR, 'すでに登録されているメールアドレスです。');
+        Msg::push(Msg::DEBUG, 'すでに登録されているメールアドレスです。');
         return false;
       }
 
       if ($user->password !== $user->password_confirm) {
-        Msg::push(Msg::ERROR, 'パスワードが一致しません。');
+        Msg::push(Msg::DEBUG, 'パスワードが一致しません。');
         return false;
       }
 
@@ -110,7 +110,7 @@ class Auth
       $is_success = false;
 
       Msg::push(Msg::DEBUG, $e->getMessage());
-      Msg::push(Msg::ERROR, 'ユーザー登録処理でエラーが発生しました。');
+      Msg::push(Msg::ERROR, 'ユーザー登録処理でエラーが発生しました。' . '<br>' . 'もう1度と試してください。');
     }
 
     return $is_success;
@@ -144,7 +144,7 @@ class Auth
         !empty($fetchedUpdateUserByName)
         && ($user->name !== $fetchedUpdateUserByName->name)
       ) {
-        Msg::push(Msg::ERROR, 'すでに登録されているユーザー名です。');
+        Msg::push(Msg::DEBUG, 'すでに登録されているユーザー名です。');
 
         return false;
       }
@@ -154,13 +154,13 @@ class Auth
         !empty($fetchedUpdateUserByEmail)
         && ($user->email !== $fetchedUpdateUserByEmail->email)
       ) {
-        Msg::push(Msg::ERROR, 'すでに登録されているメールアドレスです。');
+        Msg::push(Msg::DEBUG, 'すでに登録されているメールアドレスです。');
 
         return false;
       }
 
       if ($update_user->password !== $update_user->password_confirm) {
-        Msg::push(Msg::ERROR, 'パスワードが一致しません。');
+        Msg::push(Msg::DEBUG, 'パスワードが一致しません。');
 
         return false;
       }
