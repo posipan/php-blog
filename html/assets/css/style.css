@@ -156,7 +156,7 @@ body {
   font-weight: 400;
   line-height: 1.5;
   color: #333;
-  min-width: 75rem;
+  min-width: 750px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -230,7 +230,7 @@ textarea {
     opacity: 0;
   }
 }
-@media (max-width: 64rem) {
+@media (max-width: 749px) {
   body {
     min-width: auto;
   }
@@ -244,46 +244,54 @@ textarea {
   }
 }
 /*
-  Layout
+  Header
 */
 .header {
   width: 100%;
   background: #FFBC61;
 }
 .header__inner {
-  max-width: 75rem;
+  max-width: 750px;
   margin: auto;
   height: 5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .header__logo {
   margin-top: 0.4rem;
 }
 .header__logo a {
   width: 10rem;
 }
-.header__nav ul {
+
+.header__nav > ul {
   display: flex;
   align-items: center;
 }
-.header__nav ul li {
+.header__nav > ul > li {
   margin-right: 1.6rem;
 }
-.header__nav ul li a {
+.header__nav > ul > li:last-child {
+  margin-right: 0;
+}
+.header__nav > ul > li a {
   font-size: 1.4rem;
   color: #FFFFFF;
 }
-.header__nav ul li.nav__mypage {
+.header__nav .mypage__item {
   position: relative;
 }
-.header__nav ul li.nav__mypage .nav__mypage-name {
+.header__nav .mypage__item:hover .mypage__menu {
+  display: block;
+}
+.header__nav .mypage__name {
   padding: 1rem;
   position: relative;
   cursor: pointer;
 }
-.header__nav ul li.nav__mypage .nav__mypage-name:after {
+.header__nav .mypage__name:after {
   content: "";
   display: block;
   position: absolute;
@@ -292,13 +300,10 @@ textarea {
   transform: translate(0, -50%) rotate(-45deg);
   width: 1rem;
   height: 1rem;
-  border-left: 2px solid #FFFFFF;
-  border-bottom: 2px solid #FFFFFF;
+  border-left: 0.2rem solid #FFFFFF;
+  border-bottom: 0.2rem solid #FFFFFF;
 }
-.header__nav ul li.nav__mypage:hover .nav__mypage-menu {
-  display: block;
-}
-.header__nav ul li.nav__mypage .nav__mypage-menu {
+.header__nav .mypage__menu {
   display: none;
   position: absolute;
   top: 4rem;
@@ -306,10 +311,10 @@ textarea {
   z-index: 1;
   width: 25rem;
   background: #FFFFFF;
-  padding: 2.4rem 2rem;
-  box-shadow: 0.1rem 0.1rem 1rem 0px rgba(0, 0, 0, 0.2);
+  padding: 1.6rem 2rem 2.4rem;
+  box-shadow: 0.1rem 0.1rem 1rem 0 rgba(0, 0, 0, 0.2);
 }
-.header__nav ul li.nav__mypage .nav__mypage-menu:before {
+.header__nav .mypage__menu:before {
   content: "";
   display: block;
   position: absolute;
@@ -321,37 +326,56 @@ textarea {
   border-width: 0 1rem 1rem 1rem;
   border-color: transparent transparent #FFFFFF transparent;
 }
-.header__nav ul li.nav__mypage .nav__mypage-menu ul {
-  display: block;
-}
-.header__nav ul li.nav__mypage .nav__mypage-menu ul li {
-  margin-bottom: 1.6rem;
-}
-.header__nav ul li.nav__mypage .nav__mypage-menu ul li:last-child {
-  margin-bottom: 0;
-}
-.header__nav ul li.nav__mypage .nav__mypage-menu ul li.nav__post-create {
+.header__nav .mypage__menu ul li.mypage__create {
   border-top: 0.1rem solid #ccc;
-  margin: 2.4rem auto 0;
-  padding-top: 2.4rem;
+  margin: 1rem auto 0;
+  padding-top: 2rem;
 }
-.header__nav ul li.nav__mypage .nav__mypage-menu ul li.nav__post-create .btn--accent {
-  color: #FFFFFF;
-}
-.header__nav ul li.nav__mypage .nav__mypage-menu ul li.nav__post-create .btn--accent:hover {
-  color: #F99292;
-}
-.header__nav ul li.nav__mypage .nav__mypage-menu ul li a {
+.header__nav .mypage__menu ul li a {
   color: #333;
+  padding: 1rem;
+}
+.header__nav .mypage__menu ul li a:hover {
+  color: #FFFFFF;
+  background: #F99292;
 }
 
-.container {
-  max-width: 75rem;
-  width: 100%;
-  margin: 0 auto;
-  padding: 4.8rem 0;
-}
+@media screen and (max-width: 749px) {
+  .header__inner {
+    padding: 0 1.6rem;
+  }
 
+  .header__logo a {
+    width: 8.4rem;
+  }
+
+  .header__nav > ul > li {
+    margin-right: 1.2rem;
+  }
+  .header__nav > ul > li a {
+    font-size: 1.2rem;
+  }
+  .header__nav .mypage__item {
+    margin-right: 1.2rem !important;
+  }
+  .header__nav .mypage__item:hover .mypage__menu {
+    display: block;
+  }
+  .header__nav .mypage__name {
+    font-size: 1.4rem;
+  }
+  .header__nav .mypage__menu {
+    display: none !important;
+    top: 4.8rem;
+    right: 0.2rem;
+  }
+  .header__nav .mypage__menu.active {
+    display: block !important;
+  }
+}
+/*
+  Footer
+*/
 .footer {
   width: 100%;
   background: #FFBC61;
@@ -365,13 +389,23 @@ textarea {
 }
 
 /*
+  Container
+*/
+.container {
+  max-width: 750px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 4.8rem 0;
+}
+
+/*
   Parts
 */
 .btn {
   display: block;
   border-radius: 9999px;
   font-size: 1.6rem;
-  padding: 0.8rem 2.4rem;
+  padding: 0.8rem 2.4rem !important;
   border-width: 2px;
   border-style: solid;
   max-width: 240px;
@@ -387,11 +421,11 @@ textarea {
 .btn--accent {
   border-color: #F99292;
   background: #F99292;
-  color: #FFFFFF;
+  color: #FFFFFF !important;
 }
 .btn--accent:hover {
   background: transparent;
-  color: #F99292;
+  color: #F99292 !important;
 }
 .btn--secondary {
   border-color: #FFC679;

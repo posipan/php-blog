@@ -6,7 +6,7 @@
   display: block;
   border-radius: 9999px;
   font-size: 1.6rem;
-  padding: 0.8rem 2.4rem;
+  padding: 0.8rem 2.4rem !important;
   border-width: 2px;
   border-style: solid;
   max-width: 240px;
@@ -22,10 +22,10 @@
   &--accent {
     border-color: $accent-color;
     background: $accent-color;
-    color: $white;
+    color: $white !important;
     &:hover {
       background: transparent;
-      color: $accent-color;
+      color: $accent-color !important;
     }
   }
 

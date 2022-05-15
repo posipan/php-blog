@@ -15,17 +15,17 @@ showToastInfo();
 const isImage = (fileName) => {
   fileName = fileName.substring(fileName.lastIndexOf('.'));
   if (fileName.match(/\.(jpg|jpeg|png|gif|svg)$/i)) {
-    return true
+    return true;
   }
-  return false
-}
+  return false;
+};
 
 const isBase64Image = (fileName) => {
   if (fileName.match(/^(data:image)?/i)) {
-    return true
+    return true;
   }
-  return false
-}
+  return false;
+};
 
 /**
  * Mypage Post
@@ -45,7 +45,7 @@ function initImagePreview() {
     hiddenImage.value = '';
   });
 
-  if ((isImage(imagePreview.src) || isBase64Image(imagePreview.src) && imagePreview.classList.contains('active'))) {
+  if (isImage(imagePreview.src) || (isBase64Image(imagePreview.src) && imagePreview.classList.contains('active'))) {
     formImagePreview.style.display = 'block';
     formImage.style.display = 'none';
   } else {
@@ -72,5 +72,19 @@ if (document.getElementById('form--post') !== null) {
 
   document.getElementById('uploadImage').addEventListener('change', function () {
     previewImage(this);
-  })
+  });
 }
+
+/**
+ * Hamburger Menu
+ */
+const $mypageName = document.getElementById('mypage__name');
+const breakPoint = 749;
+$mypageName.addEventListener('click', function (e) {
+  e.preventDefault();
+  if (window.innerWidth <= breakPoint) {
+    this.nextElementSibling.classList.toggle('active');
+  } else {
+    return false;
+  }
+});

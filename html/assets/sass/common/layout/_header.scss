@@ -1,0 +1,172 @@
+/*
+  Header
+*/
+.header {
+  width: 100%;
+  background: $primary-color;
+
+  &__inner {
+    max-width: $base_w;
+    margin: auto;
+    height: 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.header__logo {
+  margin-top: 0.4rem;
+
+  a {
+    width: 10rem;
+  }
+}
+
+.header__nav {
+  >ul {
+    display: flex;
+    align-items: center;
+
+    >li {
+      margin-right: 1.6rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      a {
+        font-size: 1.4rem;
+        color: $white;
+      }
+    }
+  }
+
+  .mypage {
+    &__item {
+      position: relative;
+
+      &:hover {
+        .mypage__menu {
+          display: block;
+        }
+      }
+    }
+
+    &__name {
+      padding: 1rem;
+      position: relative;
+      cursor: pointer;
+
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: -0.8rem;
+        transform: translate(0, -50%) rotate(-45deg);
+        width: 1rem;
+        height: 1rem;
+        border-left: 0.2rem solid $white;
+        border-bottom: 0.2rem solid $white;
+      }
+    }
+
+    &__menu {
+      display: none;
+      position: absolute;
+      top: 4rem;
+      right: -0.8rem;
+      z-index: 1;
+      width: 25rem;
+      background: $white;
+      padding: 1.6rem 2rem 2.4rem;
+      box-shadow: 0.1rem 0.1rem 1rem 0 rgba(0, 0, 0, 0.2);
+
+      &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: -1rem;
+        right: 1.6rem;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 1rem 1rem 1rem;
+        border-color: transparent transparent $white transparent;
+      }
+
+      ul {
+        li {
+          &.mypage__create {
+            border-top: 0.1rem solid #ccc;
+            margin: 1rem auto 0;
+            padding-top: 2rem;
+          }
+
+          a {
+            color: #333;
+            padding: 1rem;
+
+            &:hover {
+              color: $white;
+              background: $accent-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .header {
+    &__inner {
+      padding: 0 1.6rem;
+    }
+  }
+
+  .header__logo {
+    a {
+      width: 8.4rem;
+    }
+  }
+
+  .header__nav {
+    >ul {
+      >li {
+        margin-right: 1.2rem;
+
+        a {
+          font-size: 1.2rem;
+        }
+      }
+    }
+
+    .mypage {
+      &__item {
+        margin-right: 1.2rem !important;
+
+        &:hover {
+          .mypage__menu {
+            display: block;
+          }
+        }
+      }
+
+      &__name {
+        font-size: 1.4rem;
+      }
+
+      &__menu {
+        display: none !important;
+        top: 4.8rem;
+        right: 0.2rem;
+
+        &.active {
+          display: block !important;
+        }
+      }
+    }
+  }
+}

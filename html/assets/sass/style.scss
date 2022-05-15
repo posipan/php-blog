@@ -1,7 +1,9 @@
 @import './common/_reset';
 @import './common/_variable';
 @import './common/_base';
-@import './common/_layout';
+@import './common/layout/_header';
+@import './common/layout/_footer';
+@import './common/layout/_container';
 @import './common/_parts';
 @import './common/_form';
 @import './common/_post';
