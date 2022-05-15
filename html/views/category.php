@@ -40,9 +40,9 @@ function index(array|object|false $posts, int $start, float $pages, string $cate
           'author' => get_url('author?name=' . $post->author_name),
           'category' => get_url('category?name=' . $all_categories[$post->selected_category_id - 1]->name),
         ];
-      }
 
-      \layout\post_item($post, $all_categories, $urls);
+        \layout\post_item($post, $all_categories, $urls);
+      }
       ?>
     </div>
 
