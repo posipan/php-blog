@@ -23,10 +23,10 @@
     select {
       width: 100%;
       font-size: 1.6rem;
-      border-radius: 4px;
+      border-radius: 0.4rem;
       padding: 1.2rem;
       background: $white;
-      border: 1px solid #ccc;
+      border: 0.1rem solid #ccc;
     }
 
     input[type="file"] {
@@ -74,8 +74,8 @@
         transform: translate(0, -50%);
         width: 2rem;
         height: 2rem;
-        border-radius: 4px;
-        border: 2px solid $accent-color;
+        border-radius: 0.4rem;
+        border: 0.2rem solid $accent-color;
       }
 
       &:after {
@@ -84,8 +84,8 @@
         width: 0.8rem;
         height: 1.4rem;
         background: transparent;
-        border-bottom: 3px solid $white;
-        border-right: 3px solid $white;
+        border-bottom: 0.3rem solid $white;
+        border-right: 0.3rem solid $white;
         transform: rotate(45deg);
         opacity: 0;
       }
@@ -93,7 +93,7 @@
   }
 
   &__error {
-    margin-top: 4px;
+    margin-top: 0.4rem;
     color: red;
     font-size: 1.4rem;
   }
@@ -102,12 +102,6 @@
     display: flex;
     flex-direction: row-reverse;
     justify-content: center;
-
-    .btn {
-      // &:last-child {
-      //   margin-right: 1.6rem;
-      // }
-    }
   }
 
   &__preview {
@@ -116,11 +110,11 @@
 
     .delete-image {
       position: absolute;
-      text-indent: -9999px;
+      text-indent: -10000rem;
       top: 2rem;
       right: 2rem;
       display: block;
-      border-radius: 9999px;
+      border-radius: 10000rem;
       background: rgba(0, 0, 0, 0.8);
       width: 4rem;
       height: 4rem;
@@ -133,8 +127,8 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 20px;
-        height: 2px;
+        width: 2rem;
+        height: 0.2rem;
         background: $white;
       }
 
@@ -165,16 +159,16 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      height: 400px;
-      border-radius: 4px;
+      height: 40rem;
+      border-radius: 0.4rem;
       background: $white;
-      border: 1px solid #ccc;
+      border: 0.1rem solid #ccc;
       cursor: pointer;
 
       img {
         height: 100%;
         object-fit: cover;
-        border-radius: 4px;
+        border-radius: 0.4rem;
       }
 
       input {
@@ -184,12 +178,7 @@
       a {
         background: $white;
         color: #ccc;
-        display: block;
         font-size: 1.6rem;
-        padding: 0.8rem 2.4rem;
-        max-width: 240px;
-        min-width: 160px;
-        transition: 0.2s ease all;
         text-align: center;
       }
     }
@@ -207,8 +196,8 @@
       transform: translate(0, -50%) rotate(-45deg);
       width: 0.8rem;
       height: 0.8rem;
-      border-left: 2px solid #ccc;
-      border-bottom: 2px solid #ccc;
+      border-left: 0.2rem solid #ccc;
+      border-bottom: 0.2rem solid #ccc;
     }
   }
 

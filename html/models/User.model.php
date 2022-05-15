@@ -71,7 +71,7 @@ class UserModel extends AbstractModel
     $result = true;
 
     if (empty($val)) {
-      Msg::push(Msg::ERROR, 'IDが不正です。');
+      Msg::push(Msg::DEBUG, '不正なIDです。');
 
       $result = false;
     }
@@ -100,12 +100,12 @@ class UserModel extends AbstractModel
     $result = true;
 
     if (empty($val)) {
-      Msg::push(Msg::ERROR, 'ユーザー名を入力してください。');
+      Msg::push(Msg::DEBUG, 'ユーザー名を入力してください。');
 
       $result = false;
     } else {
       if (mb_strlen($val) > static::MAX_NAME_LEN) {
-        Msg::push(Msg::ERROR, 'ユーザー名は15文字以下で入力してください。');
+        Msg::push(Msg::DEBUG, 'ユーザー名は15文字以下で入力してください。');
 
         $result = false;
       }
@@ -135,12 +135,12 @@ class UserModel extends AbstractModel
     $result = true;
 
     if (empty($val)) {
-      Msg::push(Msg::ERROR, 'メールアドレスを入力してください。');
+      Msg::push(Msg::DEBUG, 'メールアドレスを入力してください。');
 
       $result = false;
     } else {
       if (!filter_var($val, FILTER_VALIDATE_EMAIL)) {
-        Msg::push(Msg::ERROR, 'メールアドレスの形式が無効です。');
+        Msg::push(Msg::DEBUG, 'メールアドレスの形式が無効です。');
 
         $result = false;
       }
@@ -170,18 +170,18 @@ class UserModel extends AbstractModel
     $result = true;
 
     if (empty($val)) {
-      Msg::push(Msg::ERROR, 'パスワードを入力してください。');
+      Msg::push(Msg::DEBUG, 'パスワードを入力してください。');
 
       $result = false;
     } else {
       if (strlen($val) < static::MIN_PASSWORD_LEN) {
-        Msg::push(Msg::ERROR, 'パスワードは8文字以上でで入力してください。');
+        Msg::push(Msg::DEBUG, 'パスワードは8文字以上でで入力してください。');
 
         $result = false;
       }
 
       if (!is_alphanumeric_char($val)) {
-        Msg::push(Msg::ERROR, 'パスワードは半角英数字で入力してください。');
+        Msg::push(Msg::DEBUG, 'パスワードは半角英数字で入力してください。');
 
         $result = false;
       }

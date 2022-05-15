@@ -72,11 +72,11 @@ textarea {
 
 @keyframes fadein {
   from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
+  to {bottom: 4rem; opacity: 1;}
 }
 
 @keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
+  from {bottom: 4rem; opacity: 1;}
   to {bottom: 0; opacity: 0;}
 }
 
