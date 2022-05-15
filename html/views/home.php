@@ -25,6 +25,7 @@ function index(array|object|false $posts, int $start, float $pages): void
 ?>
 
   <div class="archive">
+    <?php if (!empty($posts)): ?>
     <div class="archive__list">
       <?php
       /** @var array */
@@ -44,6 +45,9 @@ function index(array|object|false $posts, int $start, float $pages): void
     </div>
 
     <?php \layout\pagination($start, $pages, '/?page='); ?>
+    <?php else: ?>
+      <?php \layout\nopost(); ?>
+    <?php endif; ?>
   </div>
 
 <?php

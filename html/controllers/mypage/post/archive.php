@@ -42,6 +42,6 @@ function get(): void
   if (count($posts) > 0) {
     \view\mypage\post\archive\index($posts, $start, $pages);
   } else {
-    \view\mypage\post\archive\nopost();
+    \layout\nopost(true);
   }
 }

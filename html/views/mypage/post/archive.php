@@ -54,16 +54,4 @@ function index(array|object|false $posts, int $start, float $pages): void
 
 <?php
 }
-
-function nopost()
-{
-?>
-  <div class="nopost">
-    <p class="nopost__text">記事がありません。</p>
-    <p class="nopost__btn"><a href="<?php the_url('mypage/post/create'); ?>" class="btn btn--accent">記事を作成する</a></p>
-
-  </div>
-
-<?php
-}
 ?>
