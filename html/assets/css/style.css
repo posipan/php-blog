@@ -896,33 +896,18 @@ textarea {
 }
 
 /*
-  Register
+  Auth
 */
-.register {
-  width: 48rem;
+.auth {
+  max-width: 56rem;
+  width: 100%;
   margin: 0 auto;
 }
-.register__link {
+.auth__link {
   margin-top: 1.6rem;
   text-align: center;
 }
-.register__link a {
-  font-size: 1.4rem;
-  text-decoration: underline;
-}
-
-/*
-  Login
-*/
-.login {
-  width: 48rem;
-  margin: 0 auto;
-}
-.login__link {
-  margin-top: 1.6rem;
-  text-align: center;
-}
-.login__link a {
+.auth__link a {
   font-size: 1.4rem;
   text-decoration: underline;
 }

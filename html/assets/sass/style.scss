@@ -8,9 +8,8 @@
 @import './common/_form';
 @import './common/_post';
 
-@import './auth/_register';
-@import './auth/_login';
+@import './_auth';
 
-@import './user';
-@import './error';
-@import './pagination';
+@import './_user';
+@import './_error';
+@import './_pagination';

@@ -22,19 +22,19 @@ function index(): void
 
   <h1 class="page-title">ログイン</h1>
 
-  <div class="register">
+  <div class="register auth">
     <form action="<?php echo CURRENT_URI; ?>" method="POST" class="form box">
       <div class="form__control">
-        <label for="email" class="form__label">メールアドレス</label>
+        <p class="form__label">メールアドレス</p>
         <div class="form__content">
-          <input type="email" name="email" id="email" placeholder="example@example.com" />
+          <input type="email" name="email" placeholder="example@example.com" />
         </div>
       </div>
 
       <div class="form__control">
-        <label for="password" class="form__label">パスワード</label>
+        <p class="form__label">パスワード</p>
         <div class="form__content">
-          <input type="password" name="password" id="password" />
+          <input type="password" name="password" />
         </div>
       </div>
 
@@ -43,7 +43,7 @@ function index(): void
       </div>
     </form>
 
-    <p class="register__link"><a href="<?php the_url('register'); ?>">ユーザー登録はこちら</a></p>
+    <p class="auth__link"><a href="<?php the_url('register'); ?>">ユーザー登録はこちら</a></p>
   </div>
 
 <?php
