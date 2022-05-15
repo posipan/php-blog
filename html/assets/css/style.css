@@ -534,6 +534,11 @@ textarea {
   background: #e92f2f;
 }
 
+@media screen and (max-width: 749px) {
+  .btn {
+    font-size: 1.4rem !important;
+  }
+}
 /*
   Form
 */
@@ -781,7 +786,7 @@ textarea {
 .post-item__status--draft {
   background: #aaa;
 }
-.post-item__desc {
+.post-item__content {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -810,11 +815,11 @@ textarea {
   align-items: center;
   font-size: 1.4rem;
 }
-.post-item__footer .author .icon {
+.post-item__footer .author__icon {
   display: block;
   margin-top: 0.2rem;
 }
-.post-item__footer .author a {
+.post-item__footer .author__name {
   margin-left: 0.6rem;
   text-decoration: underline;
 }
@@ -895,6 +900,16 @@ textarea {
   width: 100%;
 }
 
+@media screen and (max-width: 749px) {
+  .archive {
+    gap: 2.4rem;
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .post-item__image {
+    height: 44vw;
+  }
+}
 /*
   Auth
 */

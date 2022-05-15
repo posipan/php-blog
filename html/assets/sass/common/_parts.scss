@@ -2,6 +2,7 @@
   Parts
 */
 
+// Button
 .btn {
   display: block;
   border-radius: 9999px;
@@ -141,5 +142,11 @@
   }
   &--danger {
     background: #e92f2f;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .btn {
+    font-size: 1.4rem !important;
   }
 }
