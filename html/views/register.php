@@ -21,44 +21,43 @@ function index(): void
 
   <h1 class="page-title">ユーザー登録</h1>
 
-  <div class="register">
+  <div class="register auth">
     <form action="<?php echo CURRENT_URI; ?>" method="POST" class="form box">
       <div class="form__control">
-        <label for="name" class="form__label">ユーザー名</label>
-        <p class="form__content">
-          <input type="text" name="name" id="name" placeholder="POSIPAN" />
-        </p>
+        <p class="form__label">ユーザー名</p>
+        <div class="form__content">
+          <input type="text" name="name" placeholder="Posipan" />
+        </div>
       </div>
 
       <div class="form__control">
-        <label for="email" class="form__label">メールアドレス</label>
-        <p class="form__content">
-          <input type="email" name="email" id="email" placeholder="example@example.com" />
-        </p>
+        <p class="form__label">メールアドレス</p>
+        <div class="form__content">
+          <input type="email" name="email" placeholder="example@example.com" />
+        </div>
       </div>
 
       <div class="form__control">
-        <label for="password" class="form__label">パスワード</label>
-        <p class="form__content">
-          <input type="password" name="password" id="password" />
-        </p>
+        <p class="form__label">パスワード</p>
+        <div class="form__content">
+          <input type="password" name="password" />
+        </div>
       </div>
 
       <div class="form__control">
         <label for="password-confirm" class="form__label">パスワード確認</label>
-        <p class="form__content">
+        <div class="form__content">
           <input type="password" name="password-confirm" id="password-confirm" />
-        </p>
-
+        </div>
         <!-- <p class="form__error">パスワードは8文字以上入力してください。</p> -->
       </div>
 
       <div class="form__btn">
-        <button type="submit" class="btn btn--accent">登録</button>
+        <button type="submit" class="btn btn--accent">登録する</button>
       </div>
     </form>
 
-    <p class="register__link"><a href="<?php the_url('login'); ?>">ログインはこちら</a></p>
+    <p class="auth__link"><a href="<?php the_url('login'); ?>">ログインはこちら</a></p>
   </div>
 
 <?php

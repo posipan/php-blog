@@ -39,7 +39,7 @@ function mypage_post_item(object $post, array $all_categories, array $urls): voi
       <span class="post-item__status post-item__status--<?php echo $status_style; ?>"><?php echo $status_label; ?></span>
     </div>
 
-    <div class="post-item__desc">
+    <div class="post-item__content">
       <p class="post-item__category">
         <?php
           /** @var string */

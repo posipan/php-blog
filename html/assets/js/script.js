@@ -15,62 +15,76 @@ showToastInfo();
 const isImage = (fileName) => {
   fileName = fileName.substring(fileName.lastIndexOf('.'));
   if (fileName.match(/\.(jpg|jpeg|png|gif|svg)$/i)) {
-    return true
+    return true;
   }
-  return false
-}
+  return false;
+};
 
 const isBase64Image = (fileName) => {
   if (fileName.match(/^(data:image)?/i)) {
-    return true
+    return true;
   }
-  return false
-}
+  return false;
+};
 
 /**
  * Mypage Post
  */
-function initImagePreview() {
-  const imagePreview = document.getElementById('imagePreview');
+function initPreview() {
+  const preview = document.getElementById('preview');
   const formImage = document.getElementById('form__image');
-  const formImagePreview = document.getElementById('form__imagePreview');
-  const deleteBtn = document.getElementById('deleteImage');
-  const hiddenImage = document.getElementById('hiddenImage');
+  const formPreview = document.getElementById('form__preview');
+  const deleteBtn = document.getElementById('delete-image');
+  const hiddenImage = document.getElementById('hidden-image');
 
   deleteBtn.addEventListener('click', function () {
-    imagePreview.src = '';
-    formImagePreview.style.display = 'none';
+    preview.src = '';
+    formPreview.style.display = 'none';
     formImage.style.display = 'block';
-    imagePreview.classList.remove('active');
+    preview.classList.remove('active');
     hiddenImage.value = '';
   });
 
-  if ((isImage(imagePreview.src) || isBase64Image(imagePreview.src) && imagePreview.classList.contains('active'))) {
-    formImagePreview.style.display = 'block';
+  if (isImage(preview.src) || (isBase64Image(preview.src) && preview.classList.contains('active'))) {
+    formPreview.style.display = 'block';
     formImage.style.display = 'none';
   } else {
-    formImagePreview.style.display = 'none';
+    formPreview.style.display = 'none';
     formImage.style.display = 'block';
   }
 }
 
-function previewImage(elm) {
-  const imagePreview = document.getElementById('imagePreview');
+function createPreview(elm) {
+  const preview = document.getElementById('preview');
   let fileReader = new FileReader();
 
   fileReader.onload = function () {
-    imagePreview.src = fileReader.result;
+    preview.src = fileReader.result;
   };
   fileReader.readAsDataURL(elm.files[0]);
 
-  imagePreview.classList.add('active');
-  initImagePreview();
+  preview.classList.add('active');
+  initPreview();
 }
 
 if (document.getElementById('form--post') !== null) {
-  initImagePreview();
+  initPreview();
 
-  document.getElementById('uploadImage').addEventListener('change', function () {
-    previewImage(this);
-  })
+  document.getElementById('upload-image').addEventListener('change', function () {
+    createPreview(this);
+  });
 }
+
+/**
+ * Hamburger Menu
+ */
+const $mypageName = document.getElementById('mypage__name');
+const breakPoint = 749;
+$mypageName.addEventListener('click', function (e) {
+  e.preventDefault();
+  if (window.innerWidth <= breakPoint) {
+    this.nextElementSibling.classList.toggle('active');
+  } else {
+    return false;
+  }
+});

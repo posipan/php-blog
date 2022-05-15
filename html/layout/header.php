@@ -72,30 +72,33 @@ function header(): void
           </a>
         </div>
         <nav class="header__nav">
-          <ul>
-            <?php
-            if (Auth::isLogin()) :
-              /** @var object $user */
-              $user = UserModel::getSession();
-            ?>
-              <li class="nav__mypage">
-                <a class="nav__mypage-name">
+          <?php
+          if (Auth::isLogin()) :
+            /** @var object $user */
+            $user = UserModel::getSession();
+          ?>
+            <ul class="mypage">
+              <li class="mypage__item">
+                <a class="mypage__name" id="mypage__name">
                   <span class="icon"><i class="fa-solid fa-user"></i></span>
                   <?php echo escape($user->name); ?>
                 </a>
-                <div class="nav__mypage-menu">
+                <div class="mypage__menu">
                   <ul>
                     <li><a href="<?php the_url('mypage/post/archive'); ?>">マイポスト一覧</a></li>
                     <li><a href="<?php the_url('mypage/info/show'); ?>">ユーザー情報</a></li>
                     <li><a href="<?php the_url('logout'); ?>">ログアウト</a></li>
-                    <li class="nav__post-create"><a href="<?php the_url('mypage/post/create'); ?>" class="btn btn--accent">記事を作成する</a></li>
+                    <li class="mypage__create"><a href="<?php the_url('mypage/post/create'); ?>" class="btn btn--accent">記事を作成する</a></li>
                   </ul>
                 </div>
               </li>
-            <?php else : ?>
+            </ul>
+          <?php else : ?>
+            <ul class="guest">
               <li><a href="<?php the_url('login'); ?>">ログイン</a></li>
-              <li><a href="<?php the_url('register'); ?>">アカウント登録</a></li>
-            <?php endif; ?>
+              <li><a href="<?php the_url('register'); ?>">ユーザー登録</a></li>
+            </ul>
+          <?php endif; ?>
           </ul>
         </nav>
       </div>

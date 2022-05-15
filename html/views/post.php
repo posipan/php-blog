@@ -34,7 +34,7 @@ function index(object $post): void
   $post->content = $parser->parse($post->content);
 ?>
 
-  <article class="box box--post">
+  <article class="post box box--post">
     <div class="post__header">
       <p class="post__category">
         <?php
@@ -48,6 +48,7 @@ function index(object $post): void
       </p>
 
       <h1 class="post__title"><?php echo escape($post->title); ?></h1>
+
       <p class="post__date">
         <?php echo format_date($post->update_at); ?>
       </p>

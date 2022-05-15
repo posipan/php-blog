@@ -28,24 +28,27 @@ function index(array|object|false $posts, int $start, float $pages, string $cate
   <h1 class="page-title">「<?php echo $category_name; ?>」の記事</h1>
 
   <div class="archive">
-    <?php
-    /** @var array */
-    $all_categories = CategoryQuery::fetchAllCategories();
+    <div class="archive__list">
+      <?php
+      /** @var array */
+      $all_categories = CategoryQuery::fetchAllCategories();
 
-    /** @var object $post */
-    foreach ($posts as $post) {
-      $urls = [
-        'post' => get_url('/post?id=' . $post->id),
-        'author' => get_url('author?name=' . $post->author_name),
-        'category' => get_url('category?name=' . $all_categories[$post->selected_category_id - 1]->name),
-      ];
+      /** @var object $post */
+      foreach ($posts as $post) {
+        $urls = [
+          'post' => get_url('/post?id=' . $post->id),
+          'author' => get_url('author?name=' . $post->author_name),
+          'category' => get_url('category?name=' . $all_categories[$post->selected_category_id - 1]->name),
+        ];
+      }
 
       \layout\post_item($post, $all_categories, $urls);
-    }
-    ?>
+      ?>
+    </div>
+
+    <?php \layout\pagination($start, $pages, $urls['category'] . '&page='); ?>
   </div>
 
 <?php
-\layout\pagination($start, $pages, $urls['category'] . '&page=');
 }
 ?>

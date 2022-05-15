@@ -35,7 +35,7 @@ function post_item(object $post, array $all_categories, array $urls): void
       </a>
     </div>
 
-    <div class="post-item__desc">
+    <div class="post-item__content">
       <p class="post-item__category">
         <?php
           /** @var string */
@@ -52,8 +52,8 @@ function post_item(object $post, array $all_categories, array $urls): void
       <div class="post-item__footer">
         <p class="time"><?php echo format_date($post->update_at) ?></p>
         <p class="author">
-          <span class="icon"><i class="fa-solid fa-user"></i></span>
-          <a href="<?php echo $urls['author'] . '&page=1'; ?>"><?php echo escape($post->author_name); ?></a>
+          <span class="author__icon"><i class="fa-solid fa-user"></i></span>
+          <a class="author__name" href="<?php echo $urls['author'] . '&page=1'; ?>"><?php echo escape($post->author_name); ?></a>
         </p>
       </div>
     </div>

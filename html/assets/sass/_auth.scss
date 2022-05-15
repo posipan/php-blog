@@ -1,13 +1,16 @@
 /*
-  Register
+  Auth
 */
-.register {
-  width: 48rem;
+// Common
+.auth {
+  max-width: 56rem;
+  width: 100%;
   margin: 0 auto;
 
   &__link {
     margin-top: 1.6rem;
     text-align: center;
+
     a {
       font-size: 1.4rem;
       text-decoration: underline;
