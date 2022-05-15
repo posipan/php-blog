@@ -419,6 +419,11 @@ textarea {
   cursor: pointer;
   transition: 0.2s ease all;
   text-align: center;
+  margin: 0 0.8rem;
+}
+.btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
 .btn--accent {
   border-color: #F99292;
@@ -426,7 +431,7 @@ textarea {
   color: #FFFFFF !important;
 }
 .btn--accent:hover {
-  background: transparent;
+  background: transparent !important;
   color: #F99292 !important;
 }
 .btn--secondary {
@@ -617,9 +622,6 @@ textarea {
   display: flex;
   flex-direction: row-reverse;
   justify-content: center;
-}
-.form__btn .btn:last-child {
-  margin-right: 1.6rem;
 }
 .form__preview {
   position: relative;
@@ -827,7 +829,6 @@ textarea {
   color: #FFFFFF;
   padding: 4px 0.8rem;
   font-size: 1.2rem;
-  border-bottom-right-radius: 4px;
 }
 .post-item__status--publish {
   background: #F99292;

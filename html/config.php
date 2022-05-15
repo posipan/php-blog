@@ -33,7 +33,7 @@ define('GO_HOME', 'home');
 define('GO_REFERER', 'referer');
 
 /** @var int 1ページあたりの記事の表示数 */
-define('MAX_VIEW', 3);
+define('MAX_VIEW', 9);
 
 /** @var bool デバッグメッセージの表示 */
 define('DEBUG', true);

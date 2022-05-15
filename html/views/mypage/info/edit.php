@@ -24,34 +24,38 @@ function index($user): void
 
   <h1 class="page-title">ユーザー情報の編集</h1>
 
-  <form action="<?php echo CURRENT_URI; ?>" method="POST" class="form box">
+  <form action="<?php echo CURRENT_URI; ?>" method="POST" class="form box form--validate">
     <input type="hidden" name="id" value="<?php echo $user->id; ?>">
 
     <div class="form__control">
-      <p class="form__label">ユーザー名</p>
-      <p class="form__content">
-        <input type="text" name="name" value="<?php echo $user->name; ?>" />
-      </p>
-    </div>
-
-    <div class="form__control">
-      <p class="form__label">メールアドレス</p>
-      <p class="form__content">
-        <input type="email" name="email" value="<?php echo $user->email; ?>" />
-      </p>
-    </div>
-
-    <div class="form__control">
-      <p class="form__label">パスワード</p>
+      <p class="form__label">ユーザー名<span class="required">※</span></p>
       <div class="form__content">
-        <input type="password" name="password" value="" />
+        <input type="text" name="name" value="<?php echo $user->name; ?>" class="validate" required minlength="1" maxlength="15" />
+        <p class="form__error"></p>
       </div>
     </div>
 
     <div class="form__control">
-      <p class="form__label">パスワードの確認</p>
+      <p class="form__label">メールアドレス<span class="required">※</span></p>
       <div class="form__content">
-        <input type="password" name="password-confirm" value="" />
+        <input type="email" name="email" value="<?php echo $user->email; ?>" class="validate validate--email" required pattern="^[a-zA-Z0-9.!#$&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$" />
+        <p class="form__error"></p>
+      </div>
+    </div>
+
+    <div class="form__control">
+      <p class="form__label">パスワード<span class="required">※</span></p>
+      <div class="form__content">
+        <input type="password" name="password" value="" class="validate validate--password" required minlength="8" pattern="[a-zA-Z0-9]+" />
+        <p class="form__error"></p>
+      </div>
+    </div>
+
+    <div class="form__control">
+      <p class="form__label">パスワードの確認<span class="required">※</span></p>
+      <div class="form__content">
+        <input type="password" name="password-confirm" value="" class="validate validate--password-confirm" required />
+        <p class="form__error"></p>
       </div>
     </div>
 

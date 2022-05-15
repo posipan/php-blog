@@ -26,12 +26,13 @@ function index(array|object|false $post): void
   <h1 class="page-title">記事を作成する</h1>
 
   <div class="post box box--post">
-    <form action="<?php echo CURRENT_URI; ?>" method="POST" enctype="multipart/form-data" class="form form--post" id="form--post">
+    <form action="<?php echo CURRENT_URI; ?>" method="POST" enctype="multipart/form-data" class="form form--post form--validate" id="form--post">
       <div class="form__control">
-        <p class="form__label">タイトル</p>
-        <p class="form__content">
-          <input type="text" name="title" value="<?php echo $post->title; ?>" placeholder="ブログタイトル" />
-        </p>
+        <p class="form__label">タイトル<span class="required">※</span></p>
+        <div class="form__content">
+          <input type="text" name="title" value="<?php echo $post->title; ?>" placeholder="ブログタイトル" class="validate" maxlength="80" required />
+          <p class="form__error"></p>
+        </div>
       </div>
 
       <div class="form__control">
@@ -79,20 +80,21 @@ function index(array|object|false $post): void
       </div>
 
       <div class="form__control">
-        <p class="form__label">本文</p>
-        <p class="form__content">
-          <textarea name="content" rows="20"><?php echo $post->content; ?></textarea>
-        </p>
+        <p class="form__label">本文<span class="required">※</span></p>
+        <div class="form__content">
+          <textarea name="content" rows="20" class="validate" required><?php echo $post->content; ?></textarea>
+          <p class="form__error"></p>
+        </div>
       </div>
 
       <div class="form__control">
-        <p class="form__label">ステータス</p>
-        <p class="form__content form__select">
+        <p class="form__label">ステータス<span class="required">※</span></p>
+        <div class="form__content form__select">
           <select name="status">
             <option value="1" <?php echo $post->status ? 'selected': ''; ?>>公開</option>
             <option value="0" <?php echo $post->status ? '': 'selected'; ?>>下書き</option>
           </select>
-        </p>
+        </div>
       </div>
 
       <div class="form__btn">
