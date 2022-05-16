@@ -9,4 +9,4 @@ db_data
 logs
 vendor
 storage
-assets/dist
+dist
