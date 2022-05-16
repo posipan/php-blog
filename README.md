@@ -65,12 +65,34 @@ show variables like 'general_log%';
 set global general_log = on;
 ```
 
-### TypeScript
-### Sass
+### TypeScriptとSass
 
-package.jsonとgulpfile.jsがあるディレクトリで以下のコマンドを実行
+webpackを使用してTypeScriptとSassの環境を構築している
+
+* TypeScriptディレクトリ
+/html/assets/ts/
+
+* Sassディレクトリ
+/html/assets/sass/
+
+/html/ts/app.tsがエントリーポイントとなっており、.tsモジュールやstyle.scssを読み込んでいる。
+
+#### 環境構築方法
+
+* package.jsonがあるディレクトリで各種モジュールをインストール
 
 ```
 $ npm install
-$ npm start
+```
+
+* コンパイルと監視
+
+```
+$ npm run watch
+```
+
+* 本番用ビルドファイルの作成
+
+```
+$ npm run build
 ```
