@@ -23,9 +23,10 @@ function footer(): void
   </main>
   <footer class="footer">
     <p>&copy; <?php echo date("Y"); ?> POSIPAN</p>
+    <div id="output"></div>
   </footer>
 
-  <script src="<?php echo BASE_JS_PATH; ?>script.js"></script>
+  <script src="/assets/dist/bundle.js"></script>
   </body>
 
   </html>
