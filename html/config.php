@@ -14,11 +14,8 @@ define('BASE_CONTEXT_PATH', '/');
 /** @var string imagesフォルダのパス */
 define('BASE_IMAGE_PATH', BASE_CONTEXT_PATH . 'assets/images/');
 
-/** @var string cssフォルダのパス */
-define('BASE_CSS_PATH', BASE_CONTEXT_PATH . 'assets/css/');
-
-/** @var string jsフォルダのパス */
-define('BASE_JS_PATH', BASE_CONTEXT_PATH . 'assets/js/');
+/** @var string tsやsassのコンパイル先フォルダのパス */
+define('BASE_DIST_PATH', BASE_CONTEXT_PATH . 'assets/dist/');
 
 /** @var string storageフォルダのパス */
 define('BASE_STORAGE_PATH', BASE_CONTEXT_PATH . 'storage/');
