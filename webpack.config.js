@@ -1,4 +1,5 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
@@ -8,17 +9,28 @@ module.exports = {
     path: path.join(__dirname, './html/assets/dist'),
     filename: '[name].js',
   },
-  watch: true,
   resolve: {
     extensions: ['.ts', '.js'],
   },
   module: {
     rules: [
       {
-        // 拡張子が.tsで終わるファイルに対して、TypeScriptコンパイラを適用する
         test: /\.ts$/,
         loader: 'ts-loader',
       },
+      {
+        test: /\.(scss|sass|css)$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+      },
     ],
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'style.css',
+    }),
+  ],
+  devtool: 'source-map',
+  watchOptions: {
+    ignored: /node_modules/,
   },
 };
