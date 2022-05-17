@@ -7,17 +7,7 @@ const $email = document.getElementById('email') as HTMLInputElement;
 const $password = document.getElementById('password') as HTMLInputElement;
 const $confirmPassword = document.getElementById('confirm-password') as HTMLInputElement;
 const $postTitle = document.getElementById('title') as HTMLInputElement;
-const $postContent = document.getElementById('content') as HTMLInputElement;
-
-// ボタン
-export const $registerBtn = document.getElementById('btn--register') as HTMLElement;
-export const $loginBtn = document.getElementById('btn--login') as HTMLElement;
-export const $userUpdateBtn = document.getElementById('btn--user-update') as HTMLElement;
-export const $userDeleteBtn = document.getElementById('btn--user-delete') as HTMLElement;
-
-export const $createPostBtn = document.getElementById('btn--post-create') as HTMLElement;
-export const $updatePostBtn = document.getElementById('btn--post-update') as HTMLElement;
-export const $deletePostBtn = document.getElementById('btn--post-delete') as HTMLElement;
+const $postContent = document.getElementById('content') as HTMLTextAreaElement;
 
 // フォーム
 export const $registerForm = document.getElementById('form--register') as HTMLFormElement;
@@ -26,7 +16,6 @@ export const $userEditForm = document.getElementById('form--user-edit') as HTMLF
 
 export const $postCreateForm = document.getElementById('form--post-create') as HTMLFormElement;
 export const $postEditForm = document.getElementById('form--post-edit') as HTMLFormElement;
-
 
 /**
  * バリデーション関数
@@ -57,7 +46,7 @@ const isPassword = (pwd: string): boolean => {
  * サクセス & エラー
  */
 // サクセス
-const showSuccess = ($input: HTMLInputElement): void => {
+const showSuccess = ($input: HTMLInputElement | HTMLTextAreaElement): void => {
   $input.classList.remove('validate-error');
   $input.classList.add('validate-success');
 
@@ -66,7 +55,7 @@ const showSuccess = ($input: HTMLInputElement): void => {
 };
 
 // エラー
-const showError = ($input: HTMLInputElement, msg: string): void => {
+const showError = ($input: HTMLInputElement | HTMLTextAreaElement, msg: string): void => {
   $input.classList.remove('validate-success');
   $input.classList.add('validate-error');
   const $error = $input.nextElementSibling as HTMLElement;
@@ -153,7 +142,7 @@ const checkConfirmPassword = () => {
 
 // 記事タイトルチェック
 const checkPostTitle = () => {
-  let valid = false;
+  let valid: boolean = false;
 
   const min = 1,
     max = 80;
@@ -174,7 +163,7 @@ const checkPostTitle = () => {
 
 // 記事タイトルチェック
 const checkPostContent = () => {
-  let valid = false;
+  let valid: boolean = false;
 
   const postContentVal: string = $postContent.value.trim();
 
@@ -191,62 +180,60 @@ const checkPostContent = () => {
 /**
  * バリデーション
  */
-export const userValidate = ($btn: HTMLElement, $form: HTMLFormElement) => {
-  if ($btn) {
-    $btn.addEventListener('click', function (e) {
-      e.preventDefault();
+export const userValidate = ($form: HTMLFormElement): void => {
+  if ($form) {
+    $form.addEventListener('submit', function (e) {
+      let isUsernameValid = checkUsername(),
+        isEmailValid = checkEmail(),
+        isPasswordValid = checkPassword(),
+        isConfirmPasswordValid = checkConfirmPassword();
 
-      if (this === $userDeleteBtn) {
-        $form.submit();
+      let isFormValid = isUsernameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid;
+
+      if (isFormValid) {
+        console.log('valid');
+
+        return true;
       } else {
-        let isUsernameValid = checkUsername(),
-          isEmailValid = checkEmail(),
-          isPasswordValid = checkPassword(),
-          isConfirmPasswordValid = checkConfirmPassword();
-
-        let isFormValid = isUsernameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid;
-
-        if (isFormValid) {
-          $form.submit();
-        }
+        e.preventDefault();
+        console.log('invalid');
+        return false;
       }
     });
   }
 };
 
 // ログイン
-export const loginValidate = ($btn: HTMLElement, $form: HTMLFormElement) => {
-  if ($btn) {
-    $btn.addEventListener('click', function (e) {
-      e.preventDefault();
-
+export const loginValidate = ($form: HTMLFormElement): void => {
+  if ($form) {
+    $form.addEventListener('submit', function (e) {
       let isEmailValid = checkEmail(),
         isPasswordValid = checkPassword();
       let isFormValid = isEmailValid && isPasswordValid;
 
       if (isFormValid) {
-        $form.submit();
+        return true;
+      } else {
+        e.preventDefault();
+        return false;
       }
     });
   }
 };
 
 // 記事
-export const postValidate = ($btn: HTMLElement, $form: HTMLFormElement) => {
-  if ($btn) {
-    $btn.addEventListener('click', function (e) {
-      e.preventDefault();
+export const postValidate = ($form: HTMLFormElement): void => {
+  if ($form) {
+    $form.addEventListener('submit', function (e) {
+      let isPostTitleValid = checkPostTitle(),
+        isPostContentValid = checkPostContent();
+      let isFormValid = isPostTitleValid && isPostContentValid;
 
-      if (this === $deletePostBtn) {
-        $form.submit();
+      if (isFormValid) {
+        return true;
       } else {
-        let isPostTitleValid = checkPostTitle(),
-          isPostContentValid = checkPostContent();
-        let isFormValid = isPostTitleValid && isPostContentValid;
-
-        if (isFormValid) {
-          $form.submit();
-        }
+        e.preventDefault();
+        return false;
       }
     });
   }
