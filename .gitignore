@@ -3,8 +3,6 @@ node_modules
 .env*
 .vscode
 
-mysql
-data
 db_data
 logs
 vendor
