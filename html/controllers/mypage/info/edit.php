@@ -73,7 +73,7 @@ function post(): mixed
     $update_user->password = get_param('password', null);
 
     /** @var stirng */
-    $update_user->password_confirm = get_param('password-confirm', null);
+    $update_user->confirm_password = get_param('confirm-password', null);
 
     Auth::requireUserInfoPermission($user->id, $update_user->id);
 

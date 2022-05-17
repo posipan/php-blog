@@ -27,13 +27,13 @@ function index(array|object|false $post): void
   <h1 class="page-title">記事を編集する</h1>
 
   <div class="box box--post">
-    <form action="<?php echo CURRENT_URI; ?>" method="POST" enctype="multipart/form-data" class="form form--post form--validate" id="form--post">
+    <form action="<?php echo CURRENT_URI; ?>" method="POST" enctype="multipart/form-data" class="form form--post form--post" id="form--post-edit">
       <input type="hidden" name="id" value="<?php echo $post->id; ?>">
 
       <div class="form__control">
         <p class="form__label">タイトル<span class="required">※</span></p>
         <div class="form__content">
-          <input type="text" name="title" value="<?php echo $post->title; ?>" placeholder="ブログタイトル" class="validate" maxlength="80" required />
+          <input type="text" name="title" id="title" value="<?php echo $post->title; ?>" placeholder="ブログタイトル" />
           <p class="form__error"></p>
         </div>
       </div>
@@ -85,7 +85,7 @@ function index(array|object|false $post): void
       <div class="form__control">
         <p class="form__label">本文<span class="required">※</span></p>
         <div class="form__content">
-          <textarea name="content" rows="20" class="validate" required><?php echo $post->content; ?></textarea>
+          <textarea name="content" rows="20" id="content"><?php echo $post->content; ?></textarea>
           <p class="form__error"></p>
         </div>
       </div>
@@ -101,12 +101,12 @@ function index(array|object|false $post): void
       </div>
 
       <div class="form__btn">
-        <button type="submit" name="dispatch" value="<?php echo PostModel::$UPDATE; ?>" class="btn btn--accent">更新する</button>
+        <button type="submit" name="dispatch" value="<?php echo PostModel::$UPDATE; ?>" id="btn--post-update" class="btn btn--accent">更新する</button>
         <a class="btn btn--cancel" id="cancel" onclick="return confirm('この記事の編集をキャンセルしますか？');" href="<?php the_url('mypage/post/archive'); ?>">キャンセル</a>
       </div>
 
       <div class="form__delete">
-        <button type="submit" name="dispatch" value="<?php echo PostModel::$DELETE; ?>" onclick="return confirm('この記事を削除しますか？');">この記事を削除する</button>
+        <button type="submit" name="dispatch" id="btn--post-delete" value="<?php echo PostModel::$DELETE; ?>" onclick="return confirm('この記事を削除しますか？');">この記事を削除する</button>
       </div>
     </form>
   </div>

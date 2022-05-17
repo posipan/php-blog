@@ -26,11 +26,11 @@ function index(array|object|false $post): void
   <h1 class="page-title">記事を作成する</h1>
 
   <div class="post box box--post">
-    <form action="<?php echo CURRENT_URI; ?>" method="POST" enctype="multipart/form-data" class="form form--post form--validate" id="form--post">
+    <form action="<?php echo CURRENT_URI; ?>" method="POST" enctype="multipart/form-data" class="form form--post form--post" id="form--post-create">
       <div class="form__control">
         <p class="form__label">タイトル<span class="required">※</span></p>
         <div class="form__content">
-          <input type="text" name="title" value="<?php echo $post->title; ?>" placeholder="ブログタイトル" class="validate" maxlength="80" required />
+          <input type="text" name="title" id="title" value="<?php echo $post->title; ?>" placeholder="ブログタイトル" />
           <p class="form__error"></p>
         </div>
       </div>
@@ -82,7 +82,7 @@ function index(array|object|false $post): void
       <div class="form__control">
         <p class="form__label">本文<span class="required">※</span></p>
         <div class="form__content">
-          <textarea name="content" rows="20" class="validate" required><?php echo $post->content; ?></textarea>
+          <textarea name="content" id="content" rows="20"><?php echo $post->content; ?></textarea>
           <p class="form__error"></p>
         </div>
       </div>
@@ -98,7 +98,7 @@ function index(array|object|false $post): void
       </div>
 
       <div class="form__btn">
-        <button type="submit" id="save" class="btn btn--accent">保存</button>
+        <button type="submit" id="btn--post-create" class="btn btn--accent">作成する</button>
         <a class="btn btn--cancel" id="cancel" onclick="return confirm('この記事の作成をキャンセルしますか？');" href="<?php the_url('mypage/post/archive'); ?>">キャンセル</a>
       </div>
 
