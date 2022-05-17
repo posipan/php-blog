@@ -1,11 +1,11 @@
 export const showMessage = (elem: string): void => {
   const time: number = 4000;
-  const $toastElm = document.querySelector(elem);
+  const $msgElm = document.querySelector(elem);
 
-  if ($toastElm !== null) {
-    $toastElm.classList.add('active');
+  if ($msgElm !== null) {
+    $msgElm.classList.add('active');
     setTimeout(() => {
-      $toastElm.classList.remove('active');
+      $msgElm.classList.remove('active');
     }, time);
   }
 };

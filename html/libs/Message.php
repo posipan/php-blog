@@ -71,11 +71,18 @@ class Msg extends AbstractModel
         }
 
         /** @var string */
-        $color = $type === static::INFO ? 'toast--info' : 'toast--danger';
+        if ($type === static::INFO) {
+          /** @var string */
+          $color = 'msg--info';
+        } else if ($type === static::ERROR) {
+          $color = 'msg--error';
+        } else {
+          $color = 'msg--debug';
+        }
 
         /** @var string $msg */
         foreach ($msgs as $msg) {
-          echo "<div class='toast $color'>{$msg}</div>";
+          echo "<div class='msg $color'>{$msg}</div>";
         }
       }
     } catch (Throwable $e) {

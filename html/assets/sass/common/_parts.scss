@@ -114,8 +114,8 @@
   }
 }
 
-// Toast
-.toast {
+// Message
+.msg {
   position: fixed;
   left: 50%;
   bottom: 4rem;
@@ -140,8 +140,12 @@
     background: #39991f;
   }
 
-  &--danger {
+  &--error {
     background: #e92f2f;
+  }
+
+  &--debug {
+    background: #e9dd2f;
   }
 }
 

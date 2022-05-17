@@ -21,7 +21,7 @@ import { initPreview, createPreview } from './img';
 import { menu } from './menu';
 
 menu();
-showMessage('.toast');
+// showMessage('.msg');
 
 // ユーザー登録
 userValidate($registerBtn, $registerForm);
