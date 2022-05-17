@@ -34,7 +34,7 @@ function index(object $post): void
   $post->content = $parser->parse($post->content);
 ?>
 
-  <article class="post box box--post">
+  <article class="post box">
     <div class="post__header">
       <p class="post__category">
         <?php

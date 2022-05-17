@@ -24,8 +24,8 @@ function index($user): void
 
   <h1 class="page-title">ユーザー情報の編集</h1>
 
-  <div class="user-edit">
-    <form action="<?php echo CURRENT_URI; ?>" method="POST" class="form box form--auth" id="form--user-edit">
+  <div class="user-edit box">
+    <form action="<?php echo CURRENT_URI; ?>" method="POST" class="form form--auth" id="form--user-edit">
       <input type="hidden" name="id" value="<?php echo $user->id; ?>">
 
       <div class="form__control">
@@ -61,12 +61,16 @@ function index($user): void
       </div>
 
       <div class="form__btn">
-        <button type="submit" name="dispatch" value="<?php echo UserModel::$UPDATE; ?>" id="btn--user-update" class="btn btn--accent">更新する</button>
+        <button type="submit"value="<?php echo UserModel::$UPDATE; ?>" class="btn btn--accent">更新する</button>
         <a class="btn btn--cancel" id="cancel" onclick="return confirm('この記事の編集をキャンセルしますか？');" href="<?php the_url('mypage/info/show'); ?>">キャンセル</a>
       </div>
 
+    </form>
+
+    <form action="/mypage/info/delete" method="POST" class="form form--auth">
+      <input type="hidden" name="id" value="<?php echo $user->id; ?>">
       <div class="form__delete">
-        <button type="submit" name="dispatch" id="btn--user-delete" value="<?php echo UserModel::$DELETE; ?>" onclick="return confirm('これまで作成した記事も全て削除されます。ユーザーを削除しますか？');">ユーザーを削除する</button>
+        <button type="submit" value="<?php echo UserModel::$DELETE; ?>" onclick="return confirm('これまで作成した記事も全て削除されます。ユーザーを削除しますか？');">ユーザーを削除する</button>
       </div>
     </form>
   </div>

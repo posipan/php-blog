@@ -26,8 +26,8 @@ function index(array|object|false $post): void
 ?>
   <h1 class="page-title">記事を編集する</h1>
 
-  <div class="box box--post">
-    <form action="<?php echo CURRENT_URI; ?>" method="POST" enctype="multipart/form-data" class="form form--post form--post" id="form--post-edit">
+  <div class="post-edit box">
+    <form action="<?php echo CURRENT_URI; ?>" method="POST" enctype="multipart/form-data" class="form form--post" id="form--post-edit">
       <input type="hidden" name="id" value="<?php echo $post->id; ?>">
 
       <div class="form__control">
@@ -101,12 +101,15 @@ function index(array|object|false $post): void
       </div>
 
       <div class="form__btn">
-        <button type="submit" name="dispatch" value="<?php echo PostModel::$UPDATE; ?>" id="btn--post-update" class="btn btn--accent">更新する</button>
+        <button type="submit" name="dispatch" value="<?php echo PostModel::$UPDATE; ?>" class="btn btn--accent">更新する</button>
         <a class="btn btn--cancel" id="cancel" onclick="return confirm('この記事の編集をキャンセルしますか？');" href="<?php the_url('mypage/post/archive'); ?>">キャンセル</a>
       </div>
+    </form>
 
+    <form action="/mypage/post/delete?id=<?php echo $post->id; ?>" method="POST" class="form form--post">
+      <input type="hidden" name="id" value="<?php echo $post->id; ?>">
       <div class="form__delete">
-        <button type="submit" name="dispatch" id="btn--post-delete" value="<?php echo PostModel::$DELETE; ?>" onclick="return confirm('この記事を削除しますか？');">この記事を削除する</button>
+        <button type="submit" onclick="return confirm('この記事を削除しますか？');">この記事を削除する</button>
       </div>
     </form>
   </div>

@@ -25,8 +25,8 @@ function index(array|object|false $post): void
 ?>
   <h1 class="page-title">記事を作成する</h1>
 
-  <div class="post box box--post">
-    <form action="<?php echo CURRENT_URI; ?>" method="POST" enctype="multipart/form-data" class="form form--post form--post" id="form--post-create">
+  <div class="post box">
+    <form action="<?php echo CURRENT_URI; ?>" method="POST" enctype="multipart/form-data" class="form form--post" id="form--post-create">
       <div class="form__control">
         <p class="form__label">タイトル<span class="required">※</span></p>
         <div class="form__content">
