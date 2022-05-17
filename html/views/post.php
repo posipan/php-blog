@@ -67,7 +67,7 @@ function index(object $post): void
       <?php endif; ?>
     </div>
 
-    <div class="post__content">
+    <div class="post__content markdown-css">
       <?php echo $post->content; ?>
     </div>
 
