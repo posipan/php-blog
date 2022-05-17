@@ -55,7 +55,7 @@ function get(): void
 }
 
 /**
- * 記事の更新または削除処理
+ * 記事の更新処理
  *
  * @return mixed
  */
@@ -69,150 +69,85 @@ function post(): mixed
   /** @var int */
   $post->id = (int) get_param('id', null, false);
 
-  /** @var string 更新または削除 */
-  $dispatch = get_param('dispatch', null);
+  /** @var \model\PostModel  */
+  $update_post = new PostModel();
 
-  if ($dispatch === PostModel::$UPDATE) {
-    /**
-     * 更新処理
-     */
+  /** @var int */
+  $update_post->id = (int) get_param('id', null);
 
-    /** @var \model\PostModel  */
-    $update_post = new PostModel();
+  /** @var string */
+  $update_post->title = get_param('title', null);
 
-    /** @var int */
-    $update_post->id = (int) get_param('id', null);
+  /** @var string|null */
+  $update_post->image = get_param('image', null);
 
-    /** @var string */
-    $update_post->title = get_param('title', null);
+  /** @var string */
+  $update_post->content = get_param('content', null);
 
-    /** @var string|null */
-    $update_post->image = get_param('image', null);
+  /** @var int */
+  $update_post->status = (int) get_param('status', null);
 
-    /** @var string */
-    $update_post->content = get_param('content', null);
+  /** @var int */
+  $update_post->selected_category_id = (int) get_param('category', null);
 
-    /** @var int */
-    $update_post->status = (int) get_param('status', null);
+  /** @var \model\CategoryRelationshipModel */
+  $category_relationship = new CategoryRelationshipModel();
 
-    /** @var int */
-    $update_post->selected_category_id = (int) get_param('category', null);
+  /** @var int */
+  $category_relationship->post_id = $update_post->id;
 
-    /** @var \model\CategoryRelationshipModel */
-    $category_relationship = new CategoryRelationshipModel();
+  /** @var object */
+  $user = UserModel::getSession();
 
-    /** @var int */
-    $category_relationship->post_id = $update_post->id;
+  Auth::requirePostPermission($post->id, $update_post->id, $user);
 
-    /** @var object */
-    $user = UserModel::getSession();
+  try {
+    /** @var \db\DB */
+    $db = new DB();
 
-    Auth::requirePostPermission($post->id, $update_post->id, $user);
+    $db->begin();
 
-    try {
-      /** @var \db\DB */
-      $db = new DB();
-
-      $db->begin();
-
-      if (!($update_post->isValidCategory($update_post->selected_category_id))) {
-        return false;
-      }
-
-      /** @var bool $is_success 成否判定 */
-      // カテゴリーリレーションの削除処理
-      $is_success = CategoryRelationshipQuery::delete($update_post);
-
-      if ($is_success) {
-          // カテゴリーリレーションの登録処理
-          $is_success = CategoryRelationshipQuery::insert($update_post, $category_relationship);
-      } else {
-        $is_success = false;
-      }
-
-      if ($is_success) {
-        // 記事の更新処理
-        $is_success = PostQuery::update($update_post);
-      } else {
-        $is_success = false;
-      }
-
-    } catch (Throwable $e) {
-      Msg::push(Msg::DEBUG, $e->getMessage());
-
-      $is_success = false;
-    } finally {
-      if ($is_success) {
-        $db->commit();
-
-        Msg::push(Msg::INFO, '記事を更新しました。');
-
-        redirect('mypage/post/archive');
-      } else {
-        $db->rollback();
-
-        Msg::push(Msg::ERROR, '記事の更新に失敗しました。');
-
-        // 入力内容をセッションに保存
-        PostModel::setSession($update_post);
-
-        redirect(GO_REFERER);
-      }
+    if (!($update_post->isValidCategory($update_post->selected_category_id))) {
+      return false;
     }
-  } else if ($dispatch === PostModel::$DELETE) {
-    /**
-     * 削除処理
-     */
 
-    /** @var \model\PostModel */
-    $delete_post = new PostModel();
+    /** @var bool $is_success 成否判定 */
+    // カテゴリーリレーションの削除処理
+    $is_success = CategoryRelationshipQuery::delete($update_post);
 
-    /** @var int */
-    $delete_post->id = (int) get_param('id', null);
-
-    /** @var \model\CategoryRelationshipModel */
-    $category_relationship = new CategoryRelationshipModel();
-
-    /** @var int */
-    $category_relationship->post_id = $delete_post->id;
-
-    /** @var object */
-    $user = UserModel::getSession();
-
-    Auth::requirePostPermission($post->id, $delete_post->id, $user);
-
-    try {
-      /** @var \db\DB */
-      $db = new DB();
-
-      $db->begin();
-
-      /** @var bool $is_success 成否判定 */
-      // カテゴリーリレーションの削除処理
-      $is_success = CategoryRelationshipQuery::delete($delete_post);
-
-      if ($is_success) {
-        // 記事の削除処理
-        $is_success = PostQuery::delete($delete_post);
-      }
-    } catch (Throwable $e) {
-      Msg::push(Msg::DEBUG, $e->getMessage());
+    if ($is_success) {
+      // カテゴリーリレーションの登録処理
+      $is_success = CategoryRelationshipQuery::insert($update_post, $category_relationship);
+    } else {
       $is_success = false;
-    } finally {
-      if ($is_success) {
-        $db->commit();
-
-        Msg::push(Msg::INFO, '記事を削除しました。');
-        redirect('mypage/post/archive');
-      } else {
-        $db->rollback();
-
-        Msg::push(Msg::ERROR, '記事の削除に失敗しました。');
-
-        redirect(GO_REFERER);
-      }
     }
-  } else {
-    return false;
+
+    if ($is_success) {
+      // 記事の更新処理
+      $is_success = PostQuery::update($update_post);
+    } else {
+      $is_success = false;
+    }
+  } catch (Throwable $e) {
+    Msg::push(Msg::DEBUG, $e->getMessage());
+
+    $is_success = false;
+  } finally {
+    if ($is_success) {
+      $db->commit();
+
+      Msg::push(Msg::INFO, '記事を更新しました。');
+
+      redirect('mypage/post/archive');
+    } else {
+      $db->rollback();
+
+      Msg::push(Msg::ERROR, '記事の更新に失敗しました。');
+
+      // 入力内容をセッションに保存
+      PostModel::setSession($update_post);
+
+      redirect(GO_REFERER);
+    }
   }
 }
