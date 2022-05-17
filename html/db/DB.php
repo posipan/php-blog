@@ -54,10 +54,10 @@ class DB
   public function __construct()
   {
     /** @var string */
-    $host = $_ENV['HOST'];
+    $host = $_ENV['DB_HOST'];
 
     /** @var string */
-    $port = $_ENV['PORT'];
+    $port = $_ENV['DB_PORT'];
 
     /** @var string */
     $dbname = $_ENV['MYSQL_DATABASE'];
