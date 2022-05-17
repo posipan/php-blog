@@ -57,10 +57,10 @@ class Auth
 
           UserModel::setSession($user);
         } else {
-          Msg::push(Msg::DEBUG, 'メールアドレスまたはパスワードに誤りがあります。');
+          Msg::push(Msg::ERROR, 'メールアドレスまたはパスワードに誤りがあります。');
         }
       } else {
-        Msg::push(Msg::DEBUG, 'メールアドレスまたはパスワードに誤りがあります。');
+        Msg::push(Msg::ERROR, 'メールアドレスまたはパスワードに誤りがあります。');
       }
     } catch (Throwable $e) {
       $is_success = false;
@@ -91,17 +91,17 @@ class Auth
       $is_success = false;
 
       if (!empty(UserQuery::fetchByName($user->name))) {
-        Msg::push(Msg::DEBUG, 'すでに登録されているユーザー名です。');
+        Msg::push(Msg::ERROR, "「{$user->name}」は、すでに登録されているユーザー名です。");
         return false;
       }
 
       if (!empty(UserQuery::fetchByEmail($user->email))) {
-        Msg::push(Msg::DEBUG, 'すでに登録されているメールアドレスです。');
+        Msg::push(Msg::ERROR, "「{$user->email}」は、すでに登録されているメールアドレスです。");
         return false;
       }
 
       if ($user->password !== $user->confirm_password) {
-        Msg::push(Msg::DEBUG, 'パスワードが一致しません。');
+        Msg::push(Msg::ERROR, 'パスワードが一致しません。');
         return false;
       }
 
@@ -144,7 +144,7 @@ class Auth
         !empty($fetchedUpdateUserByName)
         && ($user->name !== $fetchedUpdateUserByName->name)
       ) {
-        Msg::push(Msg::DEBUG, 'すでに登録されているユーザー名です。');
+        Msg::push(Msg::ERROR, "「{$fetchedUpdateUserByName->name}」は、すでに登録されているユーザー名です。");
 
         return false;
       }
@@ -154,13 +154,13 @@ class Auth
         !empty($fetchedUpdateUserByEmail)
         && ($user->email !== $fetchedUpdateUserByEmail->email)
       ) {
-        Msg::push(Msg::DEBUG, 'すでに登録されているメールアドレスです。');
+        Msg::push(Msg::ERROR, "「{$fetchedUpdateUserByEmail->email}」は、すでに登録されているメールアドレスです。");
 
         return false;
       }
 
       if ($update_user->password !== $update_user->confirm_password) {
-        Msg::push(Msg::DEBUG, 'パスワードが一致しません。');
+        Msg::push(Msg::ERROR, 'パスワードが一致しません。');
 
         return false;
       }
