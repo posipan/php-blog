@@ -10,6 +10,12 @@
     display: block;
     margin-bottom: 1.2rem;
     font-size: 1.8rem;
+    .required {
+      color: red;
+      font-size: 1rem;
+      margin-left: 0.4rem;
+      vertical-align: 50%
+    }
   }
 
   &__content {
@@ -245,6 +251,11 @@
       height: 44vw;
     }
 
+    &__image {
+      label {
+        height: 44vw;
+      }
+    }
     &__delete {
       margin-top: 3.2rem;
 

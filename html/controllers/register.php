@@ -48,7 +48,7 @@ function post()
   $user->password = get_param('password', null);
 
   /** @var string */
-  $user->password_confirm = get_param('password-confirm', null);
+  $user->confirm_password = get_param('confirm-password', null);
 
   if (Auth::regist($user)) {
     Msg::push(Msg::INFO, '登録しました！' . '<br>' . 'ログインしてください。');

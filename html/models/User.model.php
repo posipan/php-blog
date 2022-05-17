@@ -33,7 +33,7 @@ class UserModel extends AbstractModel
   public string $password;
 
   /** @var string */
-  public string $password_confirm;
+  public string $confirm_password;
 
   /**
    * @var int ユーザー名の最大入力文字数

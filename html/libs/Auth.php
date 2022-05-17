@@ -100,7 +100,7 @@ class Auth
         return false;
       }
 
-      if ($user->password !== $user->password_confirm) {
+      if ($user->password !== $user->confirm_password) {
         Msg::push(Msg::DEBUG, 'パスワードが一致しません。');
         return false;
       }
@@ -159,7 +159,7 @@ class Auth
         return false;
       }
 
-      if ($update_user->password !== $update_user->password_confirm) {
+      if ($update_user->password !== $update_user->confirm_password) {
         Msg::push(Msg::DEBUG, 'パスワードが一致しません。');
 
         return false;
