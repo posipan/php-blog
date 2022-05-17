@@ -33,4 +33,4 @@ define('GO_REFERER', 'referer');
 define('MAX_VIEW', 9);
 
 /** @var bool デバッグメッセージの表示 */
-define('DEBUG', true);
+define('DEBUG', false);
