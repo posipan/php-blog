@@ -1,2 +1,448 @@
-(()=>{"use strict";var e={864:(e,t,n)=>{n.r(t)},541:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.setPreview=void 0,t.setPreview=function(){var e=document.getElementById("preview");if(e){var t=function(){var t,n=document.getElementById("form__image"),r=document.getElementById("form__preview"),o=document.getElementById("delete-image"),i=document.getElementById("hidden-image");o.addEventListener("click",(function(){e.src="",r.style.display="none",n.style.display="block",e.classList.remove("active"),i.value=""})),(t=e.src).substring(t.lastIndexOf(".")).match(/\.(jpg|jpeg|png|gif|svg)$/i)||function(e){return!!e.match(/^(data:image)?/i)}(e.src)&&e.classList.contains("active")?(r.style.display="block",n.style.display="none"):(r.style.display="none",n.style.display="block")};document.querySelector(".form--post")&&(t(),document.getElementById("upload-image").addEventListener("change",(function(){var n,r;n=new FileReader,r=this.files[0],n.onload=function(){e.src=n.result},n.readAsDataURL(r),e.classList.add("active"),t()})))}}},825:(e,t,n)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.menu=void 0;var r=n(628);t.menu=function(){var e=document.getElementById("mypage__name");null!==e&&e.addEventListener("click",(function(e){e.preventDefault();var t=this.nextElementSibling;if(!(window.innerWidth<=r.breakPoint))return!1;t.classList.toggle("active")}))}},417:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.showMessage=void 0,t.showMessage=function(e){var t=document.querySelector(e);t&&(t.classList.add("active"),setTimeout((function(){t.classList.remove("active")}),4e3))}},409:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.postValidate=t.loginValidate=t.userValidate=t.$postEditForm=t.$postCreateForm=t.$userEditForm=t.$loginForm=t.$registerForm=void 0;var n=document.getElementById("name"),r=document.getElementById("email"),o=document.getElementById("password"),i=document.getElementById("confirm-password"),a=document.getElementById("title"),s=document.getElementById("content");t.$registerForm=document.getElementById("form--register"),t.$loginForm=document.getElementById("form--login"),t.$userEditForm=document.getElementById("form--user-edit"),t.$postCreateForm=document.getElementById("form--post-create"),t.$postEditForm=document.getElementById("form--post-edit");var d=function(e){return""!==e},l=function(e,t,n){return!(e<t||e>n)},u=function(e){e.classList.remove("validate-error"),e.classList.add("validate-success"),e.nextElementSibling.textContent=""},c=function(e,t){e.classList.remove("validate-success"),e.classList.add("validate-error"),e.nextElementSibling.textContent=t},m=function(){var e,t=!1,n=r.value.trim();return d(n)?(e=n,new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(e)?(u(r),t=!0):c(r,"メールアドレス形式で入力してください。")):c(r,"メールアドレスを入力してください。"),t},v=function(){var e,t=!1,n=o.value.trim();return d(n)?(e=n,new RegExp("^(?=.*[a-z])(?=.*[0-9])(?=.{8,})").test(e)?(u(o),t=!0):c(o,"パスワードは半角英字と半角数字をそれぞれ1文字以上使い、合計8文字以上で入力してください。")):c(o,"パスワードを入力してください。"),t};t.userValidate=function(e){e&&e.addEventListener("submit",(function(e){var t,r,a=(t=!1,r=n.value.trim(),d(r)?l(r.length,1,15)?(u(n),t=!0):c(n,"ユーザー名は".concat(1,"以上、").concat(15,"以下で入力してください。")):c(n,"ユーザー名を入力してください。"),t),s=m(),g=v(),f=function(){var e=!1,t=i.value.trim(),n=o.value.trim();return d(t)?n!==t?c(i,"パスワードが一致しません。"):(u(i),e=!0):c(i,"パスワードを入力してください。"),e}();return a&&s&&g&&f?(console.log("valid"),!0):(e.preventDefault(),console.log("invalid"),!1)}))},t.loginValidate=function(e){e&&e.addEventListener("submit",(function(e){var t=m(),n=v();return!(!t||!n)||(e.preventDefault(),!1)}))},t.postValidate=function(e){e&&e.addEventListener("submit",(function(e){var t,n,r=(t=!1,n=a.value.trim(),d(n)?l(n.length,1,80)?(u(a),t=!0):c(a,"タイトルは".concat(1,"以上、").concat(80,"以下で入力してください。")):c(a,"タイトルを入力してください。"),t),o=function(){var e=!1,t=s.value.trim();return d(t)?(u(s),e=!0):c(s,"本文を入力してください。"),e}();return!(!r||!o)||(e.preventDefault(),!1)}))}},628:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.breakPoint=void 0,t.breakPoint=749}},t={};function n(r){var o=t[r];if(void 0!==o)return o.exports;var i=t[r]={exports:{}};return e[r](i,i.exports,n),i.exports}n.r=e=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},(()=>{n(864);var e=n(409),t=n(417),r=n(541);(0,n(825).menu)(),(0,t.showMessage)(".msg--info"),(0,r.setPreview)(),(0,e.userValidate)(e.$registerForm),(0,e.loginValidate)(e.$loginForm),(0,e.userValidate)(e.$userEditForm),(0,e.postValidate)(e.$postCreateForm),(0,e.postValidate)(e.$postEditForm)})()})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./html/assets/sass/style.scss":
+/*!*************************************!*\
+  !*** ./html/assets/sass/style.scss ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./html/assets/ts/img.ts":
+/*!*******************************!*\
+  !*** ./html/assets/ts/img.ts ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+/**
+ * Thumbnail Image
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.setPreview = void 0;
+var setPreview = function () {
+    var $preview = document.getElementById('preview');
+    if (!$preview) {
+        return;
+    }
+    var isImage = function (fileName) {
+        var image = fileName.substring(fileName.lastIndexOf('.'));
+        if (image.match(/\.(jpg|jpeg|png|gif|svg)$/i)) {
+            return true;
+        }
+        return false;
+    };
+    var isBase64Image = function (fileName) {
+        if (fileName.match(/^(data:image)?/i)) {
+            return true;
+        }
+        return false;
+    };
+    var initPreview = function () {
+        var $formImage = document.getElementById('form__image');
+        var $formPreview = document.getElementById('form__preview');
+        var $deleteBtn = document.getElementById('delete-image');
+        var $hiddenImage = document.getElementById('hidden-image');
+        $deleteBtn.addEventListener('click', function () {
+            $preview.src = '';
+            $formPreview.style.display = 'none';
+            $formImage.style.display = 'block';
+            $preview.classList.remove('active');
+            $hiddenImage.value = '';
+        });
+        if (isImage($preview.src) || (isBase64Image($preview.src) && $preview.classList.contains('active'))) {
+            $formPreview.style.display = 'block';
+            $formImage.style.display = 'none';
+        }
+        else {
+            $formPreview.style.display = 'none';
+            $formImage.style.display = 'block';
+        }
+    };
+    var createPreview = function (elem) {
+        var fileReader = new FileReader();
+        var file = elem.files[0];
+        fileReader.onload = function () {
+            $preview.src = fileReader.result;
+        };
+        fileReader.readAsDataURL(file);
+        $preview.classList.add('active');
+        initPreview();
+    };
+    if (document.querySelector('.form--post')) {
+        initPreview();
+        var uploadImage = document.getElementById('upload-image');
+        uploadImage.addEventListener('change', function () {
+            createPreview(this);
+        });
+    }
+};
+exports.setPreview = setPreview;
+
+
+/***/ }),
+
+/***/ "./html/assets/ts/menu.ts":
+/*!********************************!*\
+  !*** ./html/assets/ts/menu.ts ***!
+  \********************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.menu = void 0;
+var var_1 = __webpack_require__(/*! ./var */ "./html/assets/ts/var.ts");
+var menu = function () {
+    var $mypageName = document.getElementById('mypage__name');
+    if ($mypageName !== null) {
+        $mypageName.addEventListener('click', function (e) {
+            e.preventDefault();
+            var nextElem = this.nextElementSibling;
+            if (window.innerWidth <= var_1.breakPoint) {
+                nextElem.classList.toggle('active');
+            }
+            else {
+                return false;
+            }
+        });
+    }
+};
+exports.menu = menu;
+
+
+/***/ }),
+
+/***/ "./html/assets/ts/msg.ts":
+/*!*******************************!*\
+  !*** ./html/assets/ts/msg.ts ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.showMessage = void 0;
+var showMessage = function (elem) {
+    var time = 4000;
+    var $msgElm = document.querySelector(elem);
+    if ($msgElm) {
+        $msgElm.classList.add('active');
+        setTimeout(function () {
+            $msgElm.classList.remove('active');
+        }, time);
+    }
+};
+exports.showMessage = showMessage;
+
+
+/***/ }),
+
+/***/ "./html/assets/ts/validate.ts":
+/*!************************************!*\
+  !*** ./html/assets/ts/validate.ts ***!
+  \************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.postValidate = exports.loginValidate = exports.userValidate = exports.$postEditForm = exports.$postCreateForm = exports.$userEditForm = exports.$loginForm = exports.$registerForm = void 0;
+/**
+ * 変数
+ */
+// 要素
+var $username = document.getElementById('name');
+var $email = document.getElementById('email');
+var $password = document.getElementById('password');
+var $confirmPassword = document.getElementById('confirm-password');
+var $postTitle = document.getElementById('title');
+var $postContent = document.getElementById('content');
+// フォーム
+exports.$registerForm = document.getElementById('form--register');
+exports.$loginForm = document.getElementById('form--login');
+exports.$userEditForm = document.getElementById('form--user-edit');
+exports.$postCreateForm = document.getElementById('form--post-create');
+exports.$postEditForm = document.getElementById('form--post-edit');
+/**
+ * バリデーション関数
+ */
+// 必須項目判定
+var isRequired = function (val) { return (val === '' ? false : true); };
+// 長さ範囲判定
+var isBetween = function (len, min, max) { return (len < min || len > max ? false : true); };
+// メールアドレス形式判定
+var isEmailValid = function (val) {
+    var reg = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    return reg.test(val);
+};
+// パスワード形式判定
+var isPassword = function (pwd) {
+    // const reg = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+    var reg = new RegExp('^(?=.*[a-z])(?=.*[0-9])(?=.{8,})');
+    return reg.test(pwd);
+};
+/**
+ * サクセス & エラー
+ */
+// サクセス
+var showSuccess = function ($input) {
+    $input.classList.remove('validate-error');
+    $input.classList.add('validate-success');
+    var $error = $input.nextElementSibling;
+    $error.textContent = '';
+};
+// エラー
+var showError = function ($input, msg) {
+    $input.classList.remove('validate-success');
+    $input.classList.add('validate-error');
+    var $error = $input.nextElementSibling;
+    $error.textContent = msg;
+};
+/**
+ * 各項目チェック
+ */
+// ユーザー名チェック
+var checkUsername = function () {
+    var valid = false;
+    var min = 1, max = 15;
+    var usernameVal = $username.value.trim();
+    if (!isRequired(usernameVal)) {
+        showError($username, 'ユーザー名を入力してください。');
+    }
+    else if (!isBetween(usernameVal.length, min, max)) {
+        showError($username, "\u30E6\u30FC\u30B6\u30FC\u540D\u306F".concat(min, "\u4EE5\u4E0A\u3001").concat(max, "\u4EE5\u4E0B\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002"));
+    }
+    else {
+        showSuccess($username);
+        valid = true;
+    }
+    return valid;
+};
+// メールアドレスチェック
+var checkEmail = function () {
+    var valid = false;
+    var emailVal = $email.value.trim();
+    if (!isRequired(emailVal)) {
+        showError($email, 'メールアドレスを入力してください。');
+    }
+    else if (!isEmailValid(emailVal)) {
+        showError($email, 'メールアドレス形式で入力してください。');
+    }
+    else {
+        showSuccess($email);
+        valid = true;
+    }
+    return valid;
+};
+// パスワードチェック
+var checkPassword = function () {
+    var valid = false;
+    var passwordVal = $password.value.trim();
+    if (!isRequired(passwordVal)) {
+        showError($password, 'パスワードを入力してください。');
+    }
+    else if (!isPassword(passwordVal)) {
+        showError($password, 'パスワードは半角英字と半角数字をそれぞれ1文字以上使い、合計8文字以上で入力してください。');
+    }
+    else {
+        showSuccess($password);
+        valid = true;
+    }
+    return valid;
+};
+// パスワード一致確認
+var checkConfirmPassword = function () {
+    var valid = false;
+    var confirmPasswordVal = $confirmPassword.value.trim();
+    var passwordVal = $password.value.trim();
+    if (!isRequired(confirmPasswordVal)) {
+        showError($confirmPassword, 'パスワードを入力してください。');
+    }
+    else if (passwordVal !== confirmPasswordVal) {
+        showError($confirmPassword, 'パスワードが一致しません。');
+    }
+    else {
+        showSuccess($confirmPassword);
+        valid = true;
+    }
+    return valid;
+};
+// 記事タイトルチェック
+var checkPostTitle = function () {
+    var valid = false;
+    var min = 1, max = 80;
+    var postTitleVal = $postTitle.value.trim();
+    if (!isRequired(postTitleVal)) {
+        showError($postTitle, 'タイトルを入力してください。');
+    }
+    else if (!isBetween(postTitleVal.length, min, max)) {
+        showError($postTitle, "\u30BF\u30A4\u30C8\u30EB\u306F".concat(min, "\u4EE5\u4E0A\u3001").concat(max, "\u4EE5\u4E0B\u3067\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002"));
+    }
+    else {
+        showSuccess($postTitle);
+        valid = true;
+    }
+    return valid;
+};
+// 記事タイトルチェック
+var checkPostContent = function () {
+    var valid = false;
+    var postContentVal = $postContent.value.trim();
+    if (!isRequired(postContentVal)) {
+        showError($postContent, '本文を入力してください。');
+    }
+    else {
+        showSuccess($postContent);
+        valid = true;
+    }
+    return valid;
+};
+/**
+ * バリデーション
+ */
+var userValidate = function ($form) {
+    if ($form) {
+        $form.addEventListener('submit', function (e) {
+            var isUsernameValid = checkUsername(), isEmailValid = checkEmail(), isPasswordValid = checkPassword(), isConfirmPasswordValid = checkConfirmPassword();
+            var isFormValid = isUsernameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid;
+            if (isFormValid) {
+                console.log('valid');
+                return true;
+            }
+            else {
+                e.preventDefault();
+                console.log('invalid');
+                return false;
+            }
+        });
+    }
+};
+exports.userValidate = userValidate;
+// ログイン
+var loginValidate = function ($form) {
+    if ($form) {
+        $form.addEventListener('submit', function (e) {
+            var isEmailValid = checkEmail(), isPasswordValid = checkPassword();
+            var isFormValid = isEmailValid && isPasswordValid;
+            if (isFormValid) {
+                return true;
+            }
+            else {
+                e.preventDefault();
+                return false;
+            }
+        });
+    }
+};
+exports.loginValidate = loginValidate;
+// 記事
+var postValidate = function ($form) {
+    if ($form) {
+        $form.addEventListener('submit', function (e) {
+            var isPostTitleValid = checkPostTitle(), isPostContentValid = checkPostContent();
+            var isFormValid = isPostTitleValid && isPostContentValid;
+            if (isFormValid) {
+                return true;
+            }
+            else {
+                e.preventDefault();
+                return false;
+            }
+        });
+    }
+};
+exports.postValidate = postValidate;
+
+
+/***/ }),
+
+/***/ "./html/assets/ts/var.ts":
+/*!*******************************!*\
+  !*** ./html/assets/ts/var.ts ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.breakPoint = void 0;
+exports.breakPoint = 749;
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+var exports = __webpack_exports__;
+/*!*******************************!*\
+  !*** ./html/assets/ts/app.ts ***!
+  \*******************************/
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+__webpack_require__(/*! ../sass/style.scss */ "./html/assets/sass/style.scss");
+var validate_1 = __webpack_require__(/*! ./validate */ "./html/assets/ts/validate.ts");
+var msg_1 = __webpack_require__(/*! ./msg */ "./html/assets/ts/msg.ts");
+var img_1 = __webpack_require__(/*! ./img */ "./html/assets/ts/img.ts");
+var menu_1 = __webpack_require__(/*! ./menu */ "./html/assets/ts/menu.ts");
+(0, menu_1.menu)();
+(0, msg_1.showMessage)('.msg--info');
+(0, img_1.setPreview)();
+// ユーザー登録
+(0, validate_1.userValidate)(validate_1.$registerForm);
+// ログイン
+(0, validate_1.loginValidate)(validate_1.$loginForm);
+// ユーザー編集
+(0, validate_1.userValidate)(validate_1.$userEditForm);
+// 記事作成
+(0, validate_1.postValidate)(validate_1.$postCreateForm);
+// 記事編集
+(0, validate_1.postValidate)(validate_1.$postEditForm);
+
+})();
+
+/******/ })()
+;
 //# sourceMappingURL=bundle.js.map
