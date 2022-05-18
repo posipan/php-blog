@@ -1,98 +1,164 @@
-# PHP製ブログ
+# プレーンPHP製ブログ「The Blog」
+
+https://the-blog.posipan.com/
 
 ## 概要
-* 登録したユーザーがMarkDown形式の記事を投稿できるブログシステム
+ブログ記事を投稿・閲覧できるシステム
 
+## 使用技術
+* PHP 8.1.6
+* MySQL 8.0
+* TypeScript 4.6.4
+* Sass
+* Docker
 
-## 仕様
-* 記事はタイトル、カテゴリー、サムネイル画像、MarkDown形式の本文、公開または下書きのステータス設定ができる。
-* ユーザーは情報の変更や削除が可能。ユーザーを削除した場合、ユーザーに紐づいた記事は全て削除される。
+## 機能
+### ユーザー関連
+* ユーザー登録やログイン機能
+* ユーザー情報の更新や削除機能
+* ユーザーを削除した場合、作成した記事も削除
+* ユーザー名やメールアドレスは一意
+* パスワードは半角英数字をそれぞれ1文字以上使い、合計8文字以上で入力しなければならない
+
+### 記事関連
+* 登録ユーザーによる記事の作成・編集
+  * タイトル
+  * カテゴリー
+  * サムネイル画像
+  * 本文（MarkDown形式）
+  * ステータス（公開 or 下書き）
+* 記事の削除
+* 公開記事の閲覧
+* URLパラメータによるカテゴリーや記事作成者での記事一覧の絞り込み
+* ページネーション機能(1ページ9記事)
+
+## システム構成図（ERD）
+![ERD](/html/assets/images/readme/er.png) 
 
 ## 制作の目的
+* PHPやMySQLの基礎定着ために作成した。 
+* 下記項目のような、システム開発に必要な技術をアウトプットするのに相応しいのがブログシステムであると考えたため。
+  * CRUD機能
+  * セッション処理（ログイン機能など）
+  * パスワードのハッシュ化
+  * 画像アップロード
+  * カテゴリー付け
 
-* PHPやMySQLの基礎固め
-* CRUD機能の作成、セッションを使ったログイン処理、パスワード処理、画像投稿、複数カテゴリーのタグ付けなどシステム開発の基本を体感できると考えたため
+## 制作物の参考資料
+https://www.udemy.com/course/backend-tutorial/
 
-## 環境構築
-1. Docker For Macのインストール
-2. docker-compose up -d
-3. PHPコンテナにログインしてcomposer install
-4. MySQLコンテナにログインして初期データをインポート
 
-### Docker
+## 環境構築方法
+### Gitリポジトリのクローン
+```
+git clone https://github.com/posipan/php-blog.git
+```
+
+### .envファイルを作成し、DB情報を記述
+ルートディレクトリ直下に.envを作成し、以下の内容を貼り付けて書き換える
+```
+MYSQL_DATABASE=[任意のDB名]
+MYSQL_USER=[任意のDBユーザー名]
+MYSQL_PASSWORD=[任意のDBパスワード]
+MYSQL_ROOT_PASSWORD=[任意のrootユーザーパスワード]
+
+DB_HOST=blog_mysql
+DB_PORT=3306
+```
+
+### Dockerコンテナの作成と起動
+```
+docker-compose up -d
+```
+* ホームページ  
+http://localhost:8080/  
+※サムネイル画像を表示させたい場合、ユーザー登録&ログイン後に登録しなければならない。
+
+* phpMyAdmin  
+http://localhost:4040  
+  * サーバ名: blog_mysql
+  * ユーザー名: MYSQL_USERの値
+  * パスワード: MYSQL_PASSWORDの値
+
 ### Composerのインストール
 PHPコンテナにログイン
 ```
-docker exec -it blog_php_1 /bin/bash
+docker exec -it blog_php /bin/bash
 ```
 
-PHPコンテナで以下を実行
+Composerをインストール
 ```
-composer install 
-```
-### DB関連
-* MySQLを使用
-* DBの情報はディレクトリ直下の/.envファイルに記述
-* MySQLのログファイル /db_data/*.log
-
-####  初期データのインポート
-① /data/blog.sqlをMySQLコンテナの/tmp/ディレクトリにコピーする
-
-```
-docker cp data/blog.sql blog_mysql_1:/tmp
+composer install
 ```
 
-② MySQLコンテナへログインする
-
+### nodeパッケージのインストール
+ルートディレクトリ直下で以下のコマンドを実行
 ```
-docker exec -it blog_mysql_1 /bin/bash
-```
-
-③ インポートを実行
-```
-mysql -u root -p < /tmp/blog.sql
+npm install
 ```
 
-#### Docker環境でMySQLのログを確認する
+### TypeScriptとSassのコンパイラーを起動
+webpackを使用し、TypeScriptとSassのコンパイラーを起動している
 
-MySQLコンテナにログイン後、以下のようにgeneral_logの位置を確認
-```
-show variables like 'general_log%';
-```
-
-上記コマンド実行後、general_logがOFFになっていたら、以下のコマンドんでONにする。
-```
-set global general_log = on;
-```
-
-### TypeScriptとSass
-
-webpackを使用してTypeScriptとSassの環境を構築している
-
-* TypeScriptディレクトリ
-/html/assets/ts/
-
-* Sassディレクトリ
-/html/assets/sass/
-
-/html/ts/app.tsがエントリーポイントとなっており、.tsモジュールやstyle.scssを読み込んでいる。
-
-#### 環境構築方法
-
-* package.jsonがあるディレクトリで各種モジュールをインストール
-
-```
-$ npm install
-```
-
-* コンパイルと監視
-
+コンパイルと監視
 ```
 $ npm run watch
 ```
 
-* 本番用ビルドファイルの作成
-
+本番用ビルドファイルの作成
 ```
 $ npm run build
 ```
+
+* TypeScriptディレクトリ  
+/html/assets/ts/
+
+* Sassディレクトリ  
+/html/assets/sass/
+
+* アウトプットディクトリ  
+/html/assets/dist/
+
+/html/assets/ts/app.tsがエントリーポイントとなっており、.tsモジュールやstyle.scssを読み込んでいる。
+
+
+## 画面キャプチャ
+記事一覧（ホーム）
+![home](/html/assets/images/readme/screenshot/home.png) 
+
+記事一覧（カテゴリー）
+![category](/html/assets/images/readme/screenshot/category.png) 
+
+記事一覧（作成者）  
+![author](/html/assets/images/readme/screenshot/author.png) 
+
+記事詳細
+![post](/html/assets/images/readme/screenshot/post.png) 
+
+ユーザー登録
+![register](/html/assets/images/readme/screenshot/register.png)
+
+ログイン
+![login](/html/assets/images/readme/screenshot/login.png)
+
+ユーザー記事一覧
+![mypost](/html/assets/images/readme/screenshot/mypost.png)
+
+記事登録画面
+![post-create](/html/assets/images/readme/screenshot/post-create.png)
+
+記事編集画面
+![post-edit](/html/assets/images/readme/screenshot/post-edit.png)
+
+ユーザー情報確認画面
+![user-show](/html/assets/images/readme/screenshot/user-show.png)
+
+ユーザー情報編集画面
+![user-edit](/html/assets/images/readme/screenshot/user-edit.png)
+
+404
+![404](/html/assets/images/readme/screenshot/404.png)
+
+## 備考
+* 制作物はあくまで勉強用
+* SEO対策はしていない
