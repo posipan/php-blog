@@ -395,8 +395,10 @@ class PostQuery
     /** @var string|false */
     $image = static::createImage('upload-image');
 
+    mkdir_storage();
+
     /** @var string|false サムネイル画像名を含む、画像の移動先 */
-    $image_path = BASE_SOURCE_PATH . 'storage/images/' . $image;
+    $image_path = BASE_SOURCE_PATH . 'storage/' . $image;
 
     if (!empty($file_name)) {
       if (is_image($image)) {
@@ -475,8 +477,10 @@ class PostQuery
     /** @var string|false */
     $image = static::createImage('upload-image');
 
+    mkdir_storage();
+
     /** @var string|false サムネイル画像名を含む、画像の移動先 */
-    $image_path = BASE_SOURCE_PATH . 'storage/images/' . $image;
+    $image_path = BASE_SOURCE_PATH . 'storage/' . $image;
 
     if (!empty($file_name)) {
       if (is_image($image)) {

@@ -28,7 +28,7 @@ function post_item(object $post, array $all_categories, array $urls): void
     <div class="post-item__image">
       <a href="<?php echo $urls['post']; ?>">
         <?php if (is_valid_image($post->image)) : ?>
-          <img src="<?php echo BASE_STORAGE_PATH; ?>images/<?php echo escape($post->image); ?>" alt="">
+          <img src="<?php echo BASE_STORAGE_PATH; ?><?php echo escape($post->image); ?>" alt="">
         <?php else : ?>
           <img src="<?php echo BASE_IMAGE_PATH; ?>noimage.png" class="post-item__noimage" alt="">
         <?php endif; ?>
