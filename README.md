@@ -12,12 +12,13 @@ https://the-blog.posipan.com/
 * Sass
 * Docker
 
-## 機能
+## 仕様や機能
 ### ユーザー関連
 * ユーザー登録やログイン機能
 * ユーザー情報の更新や削除機能
 * ユーザーを削除した場合、作成した記事も削除
 * ユーザー名やメールアドレスは一意
+* 入力必須項目に対してのバリデーションはフロントエンドとバックエンドの両方で行なっている
 * パスワードは半角英数字をそれぞれ1文字以上使い、合計8文字以上で入力しなければならない
 
 ### 記事関連
@@ -36,7 +37,7 @@ https://the-blog.posipan.com/
 ![ERD](/html/assets/images/readme/er.png) 
 
 ## 制作の目的
-* PHPやMySQLの基礎定着ために作成した。 
+* PHPやMySQLの基礎を定着させるため。
 * 下記項目のような、システム開発に必要な技術をアウトプットするのに相応しいのがブログシステムであると考えたため。
   * CRUD機能
   * セッション処理（ログイン機能など）
@@ -57,7 +58,7 @@ git clone https://github.com/posipan/php-blog.git
 ### .envファイルを作成し、DB情報を記述
 ルートディレクトリ直下に.envを作成し、以下の内容を貼り付けて書き換える
 ```
-MYSQL_DATABASE=[任意のDB名]
+MYSQL_DATABASE=blog
 MYSQL_USER=[任意のDBユーザー名]
 MYSQL_PASSWORD=[任意のDBパスワード]
 MYSQL_ROOT_PASSWORD=[任意のrootユーザーパスワード]
@@ -70,15 +71,6 @@ DB_PORT=3306
 ```
 docker-compose up -d
 ```
-* ホームページ  
-http://localhost:8080/  
-※サムネイル画像を表示させたい場合、ユーザー登録&ログイン後に登録しなければならない。
-
-* phpMyAdmin  
-http://localhost:4040  
-  * サーバ名: blog_mysql
-  * ユーザー名: MYSQL_USERの値
-  * パスワード: MYSQL_PASSWORDの値
 
 ### Composerのインストール
 PHPコンテナにログイン
@@ -90,6 +82,17 @@ Composerをインストール
 ```
 composer install
 ```
+
+### ページ確認
+* ホームページ  
+http://localhost:8080/  
+※サムネイル画像を表示させたい場合、ユーザー登録&ログイン後に登録しなければならない。
+
+* phpMyAdmin  
+http://localhost:4040  
+  * サーバ名: blog_mysql
+  * ユーザー名: MYSQL_USERの値
+  * パスワード: MYSQL_PASSWORDの値
 
 ### nodeパッケージのインストール
 ルートディレクトリ直下で以下のコマンドを実行
@@ -158,6 +161,11 @@ $ npm run build
 
 404
 ![404](/html/assets/images/readme/screenshot/404.png)
+
+## 今後追加したい機能
+* 作成記事のプレビュー機能
+* 記事詳細ページから記事編集ページへ遷移するリンクの追加
+* サムネイル画像の自動圧縮
 
 ## 備考
 * 制作物はあくまで勉強用
