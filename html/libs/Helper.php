@@ -101,7 +101,7 @@ function is_image($image): bool
  */
 function is_valid_image($image): bool
 {
-  $image_path = BASE_SOURCE_PATH . 'storage/images/' . $image;
+  $image_path = BASE_SOURCE_PATH . 'storage/' . $image;
   if (!empty($image) && is_image($image) && file_exists($image_path)) {
     return true;
   } else {
@@ -148,4 +148,21 @@ function format_date(string $val): string
   $to_date =  new DateTime($val);
   $to_formatted_date = $to_date->format("Y年m月d日");
   return $to_formatted_date;
+}
+
+/**
+ * storageディレクトリがなかったら作成する
+ *
+ * @return void
+ */
+function mkdir_storage(): void
+{
+  /** @var string */
+  $storage_dir = BASE_SOURCE_PATH . 'storage';
+
+  if (!file_exists($storage_dir)) {
+    if (mkdir($storage_dir, 0777)) {
+      chmod($storage_dir, 0777);
+    }
+  }
 }

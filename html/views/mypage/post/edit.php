@@ -68,7 +68,7 @@ function index(array|object|false $post): void
           <div class="form__preview" id="form__preview">
             <span class="delete-image" id="delete-image">削除</span>
 
-            <img src="<?php if (is_valid_image($post->image)) { echo BASE_STORAGE_PATH . 'images/' . $post->image; } ?>" id="preview" class="preview <?php  if (is_valid_image($post->image)) { echo 'active'; } ?>" alt="">
+            <img src="<?php if (is_valid_image($post->image)) { echo BASE_STORAGE_PATH . $post->image; } ?>" id="preview" class="preview <?php  if (is_valid_image($post->image)) { echo 'active'; } ?>" alt="">
 
             <input type="hidden" name="image" id="hidden-image" value="<?php if(is_valid_image($post->image)) { echo $post->image; } ?>">
           </div>
